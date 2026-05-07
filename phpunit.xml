@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Domain Tests">
+            <directory>tests/Domain</directory>
+        </testsuite>
+        <testsuite name="Application Tests">
+            <directory>tests/Application</directory>
+        </testsuite>
+        <!-- Comenta Infrastructure si no tienes pruebas allí -->
+        <!--
+        <testsuite name="Integration Tests">
+            <directory>tests/Infrastructure</directory>
+        </testsuite>
+        -->
+    </testsuites>
+</phpunit>
