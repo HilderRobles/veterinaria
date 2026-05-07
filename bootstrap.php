@@ -15,7 +15,7 @@ spl_autoload_register(function ($class) {
 });
 
 // Dependencias
-$pdo = new PDO('mysql:host=localhost;dbname=veterinaria_hexagonal', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=veterinaria_hexagonal', 'root', 'root');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $repositorio = new Infrastructure\RepositorioCitasMySQL($pdo);

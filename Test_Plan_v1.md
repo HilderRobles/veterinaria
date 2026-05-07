@@ -1,7 +1,7 @@
 # Plan de Pruebas - Laboratorio 5
 
 **Equipo:** Los Innovadores  
-**Fecha:** 2026-05-07  
+**Fecha:** 2026-04-30  
 **Sistema:** Gestión de citas veterinarias
 
 ## 1. Ubiquitous Language (Lenguaje Ubicuo)
