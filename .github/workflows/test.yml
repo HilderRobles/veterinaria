@@ -64,7 +64,7 @@ jobs:
     - name: 6. Mutation Test & Quality Gate
       # Se ejecuta solo si unit test e integration test pasaron en verde
       if: success()
-      run: php vendor/bin/infection --coverage=coverage --min-msi=70 --min-covered-msi=90 --show-mutations
+      run: php vendor/bin/infection --min-msi=70 --min-covered-msi=90 --show-mutations
       # -----------------------------------------------------------------------------------------
       # Umbral justificado en S07: El 70% de mutation score representa
       # el equilibrio óptimo entre el rigor analítico de los asserts y
