@@ -1,0 +1,61 @@
+Note: Pass `--log-verbosity=all` to log information about killed and errored mutants.
+Note: Pass `--debug` to log test-framework output.
+
+Escaped mutants:
+================
+
+1) C:\xampp\htdocs\veterinaria-hexagonal\Application\GestionCitasImpl.php:26    [M] MethodCallRemoval [ID] 54b38e4a6b976c1e607a6c6d4eda3dbb
+
+@@ @@
+
+         $cita = new Cita($data['cliente_nombre'], $data['mascota_nombre'], $data['fecha'], $data['hora'], $data['id']);
+         $cita->confirmar();
+-        $this->repositorio->actualizar($cita);
++
+         return $cita->toArray();
+     }
+
+
+2) C:\xampp\htdocs\veterinaria-hexagonal\Application\GestionCitasImpl.php:32    [M] Throw_ [ID] 1088e212cb1d8dfd01934be1a6f843b8
+
+@@ @@
+
+     public function cancelar($id) {
+         $data = $this->repositorio->buscarPorId($id);
+-        if (!$data) throw new \Exception("Cita no encontrada");
++        if (!$data) new \Exception("Cita no encontrada");
+
+         $cita = new Cita($data['cliente_nombre'], $data['mascota_nombre'], $data['fecha'], $data['hora'], $data['id']);
+         $cita->cancelar();
+
+
+3) C:\xampp\htdocs\veterinaria-hexagonal\Application\GestionCitasImpl.php:36    [M] MethodCallRemoval [ID] a0635847ad17caf58de7c070eb4798b3
+
+@@ @@
+
+         $cita = new Cita($data['cliente_nombre'], $data['mascota_nombre'], $data['fecha'], $data['hora'], $data['id']);
+         $cita->cancelar();
+-        $this->repositorio->actualizar($cita);
++
+         return $cita->toArray();
+     }
+
+
+4) C:\xampp\htdocs\veterinaria-hexagonal\Domain\Cita.php:34    [M] ReturnRemoval [ID] 83958a0c399900edaebf56a531f7d3f8
+
+@@ @@
+         $this->estado = 'cancelada';
+     }
+
+-    public function getId() { return $this->id; }
++    public function getId() {  }
+     public function getClienteNombre() { return $this->clienteNombre; }
+     public function getMascotaNombre() { return $this->mascotaNombre; }
+     public function getFecha() { return $this->fecha; }
+
+
+Timed Out mutants:
+==================
+
+Skipped mutants:
+================

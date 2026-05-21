@@ -1,0 +1,28 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "Domain",
+            "Application"
+        ],
+        "excludes": [
+            "Infrastructure",
+            "tests",
+            "features",
+            "vendor"
+        ]
+    },
+    "logs": {
+        "html": "infection-report",
+        "text": "infection-log.txt",
+        "summary": "infection-summary.txt"
+    },
+    "mutators": {
+        "@default": true
+    },
+    "testFramework": "phpunit",
+    "initialTestsPhpOptions": "-d memory_limit=2G",
+    "timeout": 10,
+    "minMsi": 80,
+    "minCoveredMsi": 90
+}

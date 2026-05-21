@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php"
          colors="true"
-         stopOnFailure="false">
+         stopOnFailure="false"
+         executionOrder="default">
     <testsuites>
         <testsuite name="Domain Tests">
             <directory>tests/Domain</directory>
@@ -9,11 +10,18 @@
         <testsuite name="Application Tests">
             <directory>tests/Application</directory>
         </testsuite>
-        <!-- Comenta Infrastructure si no tienes pruebas allí -->
-        <!--
-        <testsuite name="Integration Tests">
-            <directory>tests/Infrastructure</directory>
-        </testsuite>
-        -->
     </testsuites>
+    
+    <source>
+        <include>
+            <directory>Domain</directory>
+            <directory>Application</directory>
+        </include>
+        <exclude>
+            <directory>Infrastructure</directory>
+            <directory>tests</directory>
+            <directory>features</directory>
+            <directory>vendor</directory>
+        </exclude>
+    </source>
 </phpunit>
