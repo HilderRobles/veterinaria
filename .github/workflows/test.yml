@@ -47,16 +47,16 @@ jobs:
 
     # 3. Unit Test (Pruebas unitarias aisladas)
     - name: 3. Unit Test (Dominio)
-      run: ./vendor/bin/phpunit --testsuite "Domain Tests"
+      run: php vendor/bin/phpunit --testsuite "Domain Tests"
 
     # 4. Integration Test (Flujos lógicos)
     - name: 4. Integration Test (Aplicación e Infraestructura)
-      run: ./vendor/bin/phpunit --testsuite "Application Tests"
+      run: php vendor/bin/phpunit --testsuite "Application Tests"
       
     # 5. Coverage Report (Validar umbral > 80% en Dominio)
     - name: 5. Coverage Report (Quality Gate)
       run: |
-        ./vendor/bin/phpunit --coverage-text --coverage-clover coverage.xml
+        php vendor/bin/phpunit --coverage-text --coverage-clover coverage.xml
         # Aquí puedes usar un action de terceros para fallar si baja de 80, o un script
         # Por ahora, Infection también hace de Quality Gate en el siguiente paso
 
@@ -64,7 +64,7 @@ jobs:
     - name: 6. Mutation Test & Quality Gate
       # Se ejecuta solo si unit test e integration test pasaron en verde
       if: success()
-      run: ./vendor/bin/infection --coverage=coverage --min-msi=70 --min-covered-msi=90 --show-mutations
+      run: php vendor/bin/infection --coverage=coverage --min-msi=70 --min-covered-msi=90 --show-mutations
       # -----------------------------------------------------------------------------------------
       # Umbral justificado en S07: El 70% de mutation score representa
       # el equilibrio óptimo entre el rigor analítico de los asserts y
