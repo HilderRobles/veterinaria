@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'veterinaria/hexagonal',
-        'pretty_version' => 'dev-feature/pipeline-ci',
-        'version' => 'dev-feature/pipeline-ci',
-        'reference' => '20c4fcc6c3d27a76a0b5a869ea7997537a3ec78c',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '5927c34e70703b8aaf4c51132f466760aa98b74a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -701,9 +701,9 @@
             'dev_requirement' => true,
         ),
         'veterinaria/hexagonal' => array(
-            'pretty_version' => 'dev-feature/pipeline-ci',
-            'version' => 'dev-feature/pipeline-ci',
-            'reference' => '20c4fcc6c3d27a76a0b5a869ea7997537a3ec78c',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '5927c34e70703b8aaf4c51132f466760aa98b74a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
