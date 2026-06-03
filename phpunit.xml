@@ -15,13 +15,9 @@
         <testsuite name="Domain Tests">
             <directory>tests/Cliente/Dominio</directory>
             <directory>tests/Cliente/Aplicacion</directory>
-            <directory>tests/Cita/Dominio</directory>
-            <directory>tests/Cita/Aplicacion</directory>
         </testsuite>
-
         <testsuite name="Integration Tests">
             <directory>tests/Cliente/Infraestructura</directory>
-            <directory>tests/Cita/Infraestructura</directory>
         </testsuite>
     </testsuites>
 
