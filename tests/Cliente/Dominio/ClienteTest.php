@@ -23,7 +23,7 @@ class ClienteTest extends TestCase {
         return [
             'nombre' => 'Carlos Mendoza',
             'correo' => new CorreoElectronico('carlos@correo.com'),
-            'telefono' => new Telefono('9876543210'),
+            'telefono' => new Telefono("987654321"),
             'contrasena' => new Contrasena('$2y$10$EjemploHashSeguroQueSimulaLaBaseDeDatos')
         ];
     }
@@ -127,7 +127,7 @@ class ClienteTest extends TestCase {
         $this->assertEquals(100, $arreglo['id']);
         $this->assertEquals('Carlos Mendoza', $arreglo['nombre']);
         $this->assertEquals('carlos@correo.com', $arreglo['correo_electronico']);
-        $this->assertEquals('9876543210', $arreglo['telefono']);
+        $this->assertEquals('987654321', $arreglo['telefono']);       
         $this->assertEquals('admin', $arreglo['rol']);
     }
 

@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="PhpEnviadorNotificaciones.php" path="\Cliente\Infraestructura">
+    <totals>
+      <lines total="19" comments="0" code="19" executable="3" executed="3" percent="100.00"/>
+      <methods count="3" tested="3" percent="100.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="1" percent="100.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Cliente\Infraestructura\PhpEnviadorNotificaciones" start="9" executable="3" executed="3" crap="3">
+      <namespace name="App\Cliente\Infraestructura"/>
+      <method name="enviarCorreoRestablecimiento" signature="enviarCorreoRestablecimiento(App\Cliente\Dominio\ObjetoValor\CorreoElectronico $correo, string $enlace): void" start="10" end="12" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="enviarSmsAlerta" signature="enviarSmsAlerta(App\Cliente\Dominio\ObjetoValor\Telefono $telefono, string $mensaje): void" start="13" end="15" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="enviarEmailAlerta" signature="enviarEmailAlerta(App\Cliente\Dominio\ObjetoValor\CorreoElectronico $correo, string $mensaje): void" start="16" end="18" crap="1" executable="1" executed="1" coverage="100"/>
+    </class>
+    <coverage>
+      <line nr="11">
+        <covered by="Tests\Cliente\Infraestructura\PhpEnviadorNotificacionesTest::test_debe_ejecutar_todos_los_canales_de_notificacion_sin_errores"/>
+      </line>
+      <line nr="14">
+        <covered by="Tests\Cliente\Infraestructura\PhpEnviadorNotificacionesTest::test_debe_ejecutar_todos_los_canales_de_notificacion_sin_errores"/>
+      </line>
+      <line nr="17">
+        <covered by="Tests\Cliente\Infraestructura\PhpEnviadorNotificacionesTest::test_debe_ejecutar_todos_los_canales_de_notificacion_sin_errores"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2"/>
+      <line no="3">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Infraestructura</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="4"/>
+      <line no="5">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Aplicacion\EnviadorNotificaciones</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Dominio\ObjetoValor\CorreoElectronico</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Dominio\ObjetoValor\Telefono</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8"/>
+      <line no="9">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">PhpEnviadorNotificaciones</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_IMPLEMENTS">implements</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">EnviadorNotificaciones</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="10">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">enviarCorreoRestablecimiento</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">CorreoElectronico</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$enlace</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">void</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="11">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">error_log</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_DOUBLE_QUOTES">"</token>
+        <token name="T_ENCAPSED_AND_WHITESPACE">Enlace enviado a </token>
+        <token name="T_CURLY_OPEN">{</token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">valor</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_CURLY">}</token>
+        <token name="T_ENCAPSED_AND_WHITESPACE">: </token>
+        <token name="T_CURLY_OPEN">{</token>
+        <token name="T_VARIABLE">$enlace</token>
+        <token name="T_CLOSE_CURLY">}</token>
+        <token name="T_DOUBLE_QUOTES">"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="12">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="13">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">enviarSmsAlerta</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">Telefono</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$telefono</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$mensaje</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">void</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="14">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">error_log</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_DOUBLE_QUOTES">"</token>
+        <token name="T_ENCAPSED_AND_WHITESPACE">SMS a </token>
+        <token name="T_CURLY_OPEN">{</token>
+        <token name="T_VARIABLE">$telefono</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">valor</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_CURLY">}</token>
+        <token name="T_ENCAPSED_AND_WHITESPACE">: </token>
+        <token name="T_CURLY_OPEN">{</token>
+        <token name="T_VARIABLE">$mensaje</token>
+        <token name="T_CLOSE_CURLY">}</token>
+        <token name="T_DOUBLE_QUOTES">"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="15">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="16">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">enviarEmailAlerta</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">CorreoElectronico</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">string</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$mensaje</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">void</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="17">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_STRING">error_log</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_DOUBLE_QUOTES">"</token>
+        <token name="T_ENCAPSED_AND_WHITESPACE">Email de alerta a </token>
+        <token name="T_CURLY_OPEN">{</token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">valor</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_CLOSE_CURLY">}</token>
+        <token name="T_ENCAPSED_AND_WHITESPACE">: </token>
+        <token name="T_CURLY_OPEN">{</token>
+        <token name="T_VARIABLE">$mensaje</token>
+        <token name="T_CLOSE_CURLY">}</token>
+        <token name="T_DOUBLE_QUOTES">"</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="18">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="19">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+    </source>
+  </file>
+</phpunit>

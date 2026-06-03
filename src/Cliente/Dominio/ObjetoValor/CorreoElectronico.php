@@ -2,7 +2,7 @@
 
 namespace App\Cliente\Dominio\ObjetoValor;
 
-class CorreoElectronico {
+final class CorreoElectronico {
     private string $valor;
 
     public function __construct(string $valor) {

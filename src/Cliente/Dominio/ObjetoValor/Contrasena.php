@@ -2,7 +2,7 @@
 
 namespace App\Cliente\Dominio\ObjetoValor;
 
-class Contrasena {
+final class Contrasena {
     public function __construct(private string $valor) {
         if (empty(trim($valor))) {
             throw new \DomainException("La contraseña no puede estar vacía.");

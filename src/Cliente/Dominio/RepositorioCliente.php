@@ -14,4 +14,5 @@ interface RepositorioCliente {
     public function buscarPorCorreoElectronico(CorreoElectronico $correoElectronico): ?Cliente;
     public function actualizarDatosContacto(ClienteId $id, string $nombre, CorreoElectronico $correo, Telefono $telefono): void;
     public function eliminar(ClienteId $id): void;
+    public function buscarTodos(): array; // 🟢 El nuevo contrato en el Dominio
 }

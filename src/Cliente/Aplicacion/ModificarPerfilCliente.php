@@ -28,7 +28,10 @@ class ModificarPerfilCliente {
         $correoFinal = $peticion->nuevoCorreo !== null ? new CorreoElectronico($peticion->nuevoCorreo) : $correoOriginal;
         $telefonoFinal = $peticion->nuevoTelefono !== null ? new Telefono($peticion->nuevoTelefono) : $telefonoOriginal;
 
-        if ($peticion->nuevoCorreo !== null && $correoOriginal->valor() !== $correoFinal->valor()) {
+        // 🟢 SOLUCIÓN AL MUTANTE: Simplificamos el condicional redundante.
+        // Si el correo original y el final son diferentes, significa por defecto 
+        // que el usuario sí envió un correo nuevo y que este cambió.
+        if ($correoOriginal->valor() !== $correoFinal->valor()) {
             if ($this->repositorio->buscarPorCorreoElectronico($correoFinal) !== null) {
                 throw new \DomainException("El nuevo correo electrónico ya está registrado por otro propietario.");
             }

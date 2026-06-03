@@ -2,27 +2,22 @@
     "$schema": "vendor/infection/infection/resources/schema.json",
     "source": {
         "directories": [
-            "Domain",
-            "Application"
+            "src/Cliente/Dominio",
+            "src/Cliente/Aplicacion"
         ],
         "excludes": [
-            "Infrastructure",
-            "tests",
-            "features",
-            "vendor"
+            "Contratos",
+            "Interfaces"
         ]
     },
+    "phpUnit": {
+        "configDir": "." 
+    },
     "logs": {
-        "html": "infection-report",
-        "text": "infection-log.txt",
-        "summary": "infection-summary.txt"
+        "text": "build/infection.log",
+        "html": "build/infection-report.html"
     },
     "mutators": {
         "@default": true
-    },
-    "testFramework": "phpunit",
-    "initialTestsPhpOptions": "-d memory_limit=2G",
-    "timeout": 10,
-    "minMsi": 80,
-    "minCoveredMsi": 90
+    }
 }

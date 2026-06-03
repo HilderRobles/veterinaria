@@ -1,31 +1,42 @@
 <?php
+// C:\wamp64\www\Nueva carpeta\veterinaria\index.php
+
 require_once __DIR__ . '/bootstrap.php';
-header('Content-Type: application/json');
+$dependencies = require __DIR__ . '/bootstrap.php';
+$pdo = $dependencies['database'];
 
 $method = $_SERVER['REQUEST_METHOD'];
-$path = explode('/', trim($_SERVER['PATH_INFO'] ?? '/', '/'));
 
-try {
-    $controller = require __DIR__ . '/bootstrap.php';
-    
-    if ($method === 'GET' && $path[0] === 'citas' && !isset($path[1])) {
-        echo json_encode($controller->listar());
-    }
-    elseif ($method === 'POST' && $path[0] === 'citas') {
-        $data = json_decode(file_get_contents('php://input'), true);
-        echo json_encode($controller->crear($data));
-    }
-    elseif ($method === 'PUT' && $path[0] === 'citas' && isset($path[2]) && $path[2] === 'confirmar') {
-        echo json_encode($controller->confirmar($path[1]));
-    }
-    elseif ($method === 'PUT' && $path[0] === 'citas' && isset($path[2]) && $path[2] === 'cancelar') {
-        echo json_encode($controller->cancelar($path[1]));
-    }
-    else {
-        http_response_code(404);
-        echo json_encode(['error' => 'Ruta no encontrada']);
-    }
-} catch (Exception $e) {
-    http_response_code(400);
-    echo json_encode(['error' => $e->getMessage()]);
+// 1. CAPTURA Y LIMPIEZA INTELIGENTE DE URL
+// Esto extrae solo la parte que viene después de /api/ de forma segura
+$uriCompleta = $_SERVER['REQUEST_URI'];
+
+// Removemos los parámetros query de la URL si existen (ej: /api/clientes?id=5 -> /api/clientes)
+$uriSinQuery = explode('?', $uriCompleta)[0];
+
+// Buscamos dónde empieza '/api' para ignorar las subcarpetas de Wampserver
+$posicionApi = strpos($uriSinQuery, '/api');
+
+if ($posicionApi !== false) {
+    // Esto recortará todo lo anterior y te dejará exactamente "/api/clientes..."
+    $path = substr($uriSinQuery, $posicionApi);
+} else {
+    $path = $uriSinQuery;
 }
+
+$input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+
+// 2. ENRUTADOR DE CLIENTES
+if (strpos($path, '/api/clientes') === 0) {
+    header('Content-Type: application/json; charset=utf-8');
+    
+    // Despachamos usando la URL ya limpia y homogeneizada
+    \App\Cliente\Infraestructura\ClienteRuta::despachar($method, $path, $input, $pdo);
+    exit;
+}
+
+// Si llega aquí, es porque no pertenece al módulo de clientes
+header('Content-Type: application/json; charset=utf-8');
+http_response_code(404);
+echo json_encode(['error' => 'Módulo global no encontrado.', 'url_recibida' => $path]);
+exit;

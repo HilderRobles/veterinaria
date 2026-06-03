@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <file name="RegistrarCliente.php" path="\Cliente\Aplicacion">
+    <totals>
+      <lines total="29" comments="0" code="29" executable="8" executed="8" percent="100.00"/>
+      <methods count="2" tested="2" percent="100.00"/>
+      <functions count="0" tested="0" percent="0"/>
+      <classes count="1" tested="1" percent="100.00"/>
+      <traits count="0" tested="0" percent="0"/>
+    </totals>
+    <class name="App\Cliente\Aplicacion\RegistrarCliente" start="10" executable="8" executed="8" crap="3">
+      <namespace name="App\Cliente\Aplicacion"/>
+      <method name="__construct" signature="__construct(App\Cliente\Dominio\RepositorioCliente $repositorio, App\Cliente\Aplicacion\CifradorContrasena $cifrador)" start="11" end="14" crap="1" executable="1" executed="1" coverage="100"/>
+      <method name="ejecutar" signature="ejecutar(App\Cliente\Aplicacion\RegistrarClientePeticion $peticion): void" start="16" end="28" crap="2" executable="7" executed="7" coverage="100"/>
+    </class>
+    <coverage>
+      <line nr="14">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_fallar_si_el_correo_ya_existe"/>
+      </line>
+      <line nr="17">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_fallar_si_el_correo_ya_existe"/>
+      </line>
+      <line nr="18">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_fallar_si_el_correo_ya_existe"/>
+      </line>
+      <line nr="20">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_fallar_si_el_correo_ya_existe"/>
+      </line>
+      <line nr="21">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_fallar_si_el_correo_ya_existe"/>
+      </line>
+      <line nr="24">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+      </line>
+      <line nr="25">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+      </line>
+      <line nr="27">
+        <covered by="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente"/>
+      </line>
+    </coverage>
+    <source>
+      <line no="1">
+        <token name="T_OPEN_TAG">&lt;?php</token>
+      </line>
+      <line no="2"/>
+      <line no="3">
+        <token name="T_NAMESPACE">namespace</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Aplicacion</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="4"/>
+      <line no="5">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Dominio\Cliente</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="6">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Dominio\RepositorioCliente</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="7">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Dominio\ObjetoValor\CorreoElectronico</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="8">
+        <token name="T_USE">use</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_QUALIFIED">App\Cliente\Dominio\ObjetoValor\Telefono</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="9"/>
+      <line no="10">
+        <token name="T_CLASS">class</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">RegistrarCliente</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="11">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">__construct</token>
+        <token name="T_OPEN_BRACKET">(</token>
+      </line>
+      <line no="12">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_PRIVATE">private</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">RepositorioCliente</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$repositorio</token>
+        <token name="T_COMMA">,</token>
+      </line>
+      <line no="13">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_PRIVATE">private</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">CifradorContrasena</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$cifrador</token>
+      </line>
+      <line no="14">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="15"/>
+      <line no="16">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_PUBLIC">public</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_FUNCTION">function</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">ejecutar</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_STRING">RegistrarClientePeticion</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$peticion</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_COLON">:</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">void</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="17">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">CorreoElectronico</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$peticion</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">correoElectronico</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="18">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$telefono</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Telefono</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$peticion</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">telefono</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="19"/>
+      <line no="20">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_IF">if</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">repositorio</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">buscarPorCorreoElectronico</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_IS_NOT_IDENTICAL">!==</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">null</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_OPEN_CURLY">{</token>
+      </line>
+      <line no="21">
+        <token name="T_WHITESPACE">            </token>
+        <token name="T_THROW">throw</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NAME_FULLY_QUALIFIED">\DomainException</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">"El correo electr&#xF3;nico ya se encuentra registrado."</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="22">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="23"/>
+      <line no="24">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$contrasenaCifrada</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">cifrador</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">cifrar</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$peticion</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">contrasenaPlana</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="25">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$cliente</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_EQUAL">=</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_NEW">new</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_STRING">Cliente</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$peticion</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">nombre</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$correo</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$telefono</token>
+        <token name="T_COMMA">,</token>
+        <token name="T_WHITESPACE"> </token>
+        <token name="T_VARIABLE">$contrasenaCifrada</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="26"/>
+      <line no="27">
+        <token name="T_WHITESPACE">        </token>
+        <token name="T_VARIABLE">$this</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">repositorio</token>
+        <token name="T_OBJECT_OPERATOR">-&gt;</token>
+        <token name="T_STRING">guardar</token>
+        <token name="T_OPEN_BRACKET">(</token>
+        <token name="T_VARIABLE">$cliente</token>
+        <token name="T_CLOSE_BRACKET">)</token>
+        <token name="T_SEMICOLON">;</token>
+      </line>
+      <line no="28">
+        <token name="T_WHITESPACE">    </token>
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+      <line no="29">
+        <token name="T_CLOSE_CURLY">}</token>
+      </line>
+    </source>
+  </file>
+</phpunit>

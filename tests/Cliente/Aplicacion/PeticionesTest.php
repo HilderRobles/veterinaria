@@ -23,21 +23,23 @@ class PeticionesTest extends TestCase {
     }
 
     public function test_debe_construir_registrar_cliente_peticion_correctamente(): void {
-        $peticion = new RegistrarClientePeticion("Juan", "juan@correo.com", "1234567890", "Clave123");
+        // 🟢 Ponemos un celular local válido de 9 dígitos que empieza con 9
+        $peticion = new RegistrarClientePeticion("Juan", "juan@correo.com", "923456789", "Clave123");
 
         $this->assertEquals("Juan", $peticion->nombre);
         $this->assertEquals("juan@correo.com", $peticion->correoElectronico);
-        $this->assertEquals("1234567890", $peticion->telefono);
+        $this->assertEquals("923456789", $peticion->telefono); // 🟢 Sincronizado exactamente con el input
         $this->assertEquals("Clave123", $peticion->contrasenaPlana);
     }
 
     public function test_debe_construir_modificar_perfil_cliente_peticion_correctamente(): void {
-        $peticion = new ModificarPerfilClientePeticion(1, "Carlos", "carlos@correo.com", "0987654321");
+        // 🟢 Ponemos un celular local válido de 9 dígitos que empieza con 9
+        $peticion = new ModificarPerfilClientePeticion(1, "Carlos", "carlos@correo.com", "987654321");
 
         $this->assertEquals(1, $peticion->clienteId);
         $this->assertEquals("Carlos", $peticion->nuevoNombre);
         $this->assertEquals("carlos@correo.com", $peticion->nuevoCorreo);
-        $this->assertEquals("0987654321", $peticion->nuevoTelefono);
+        $this->assertEquals("987654321", $peticion->nuevoTelefono); // 🟢 Sincronizado exactamente con el input
     }
 
     public function test_debe_construir_recuperar_contrasena_peticion_correctamente(): void {
