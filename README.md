@@ -103,8 +103,7 @@ Los reportes HTML y logs detallados generados en la nube se suben automáticamen
 El proyecto sigue una distribución modular limpia orientada a desacoplar el core del negocio de los frameworks y detalles de infraestructura:
 
 
-
-.
+``` plaintext
 ├── .github/workflows/     # Configuración del pipeline de CI/CD (GitHub Actions)
 ├── src/                   # Código de producción de la aplicación
 │   └── Cliente/           # Módulo enfocado en Clientes / Propietarios
