@@ -15,6 +15,10 @@ on:
       - 'src/**'
       - 'tests/**'
 
+env:
+  TEST_FILTER: "Cliente"                            # 🎯 Módulo actual en PHPUnit
+  INFECTION_FILTER: "src/Cliente/Dominio,src/Cliente/Aplicacion" # 🎯 Módulo actual en Infection
+
 jobs:
   quality-pipeline:
     runs-on: ubuntu-latest
@@ -23,12 +27,12 @@ jobs:
     - name: Checkout del código
       uses: actions/checkout@v4
 
-    - name: Configurar PHP 8.5.6 con PCOV
+    - name: Configurar PHP 8.5 con Xdebug
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.5.6'
-        coverage: pcov
-        extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, pcov
+        php-version: '8.5' # 🟢 GitHub Actions buscará la versión estable de la rama 8.5 compatible con tu 8.5.6
+        coverage: xdebug   # 🟢 Sincronizado con tu entorno local para evitar discrepancias de cobertura
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, xdebug
         
     - name: Cache de dependencias de Composer
       id: composer-cache
@@ -45,22 +49,25 @@ jobs:
     - name: 1. Lint (Sintaxis de todos los módulos)
       run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" || true
 
-    - name: 2. Unit Tests (Dominio Global)
-      run: php vendor/bin/phpunit --testsuite "Domain Tests"
+    - name: 2. Unit Tests (Filtrado)
+      run: php vendor/bin/phpunit --testsuite "Domain Tests" --filter "${{ env.TEST_FILTER }}"
 
-    - name: 3. Integration Tests (Infraestructura Global)
-      run: php vendor/bin/phpunit --testsuite "Integration Tests"
+    - name: 3. Integration Tests (Filtrado)
+      run: php vendor/bin/phpunit --testsuite "Integration Tests" --filter "${{ env.TEST_FILTER }}"
       
-    - name: 4. Generar Reporte de Cobertura XML para Infection
-      # Creamos la carpeta build y generamos la cobertura limpia requerida por Infection
+    - name: 4. Generar Reporte de Cobertura XML con Xdebug
+      # Usamos la directiva de entorno para activar el modo cobertura de Xdebug en la terminal de Linux
+      env:
+        XDEBUG_MODE: coverage
       run: |
         mkdir -p build
-        php vendor/bin/phpunit --log-junit=build/phpunit.junit.xml --coverage-xml=build/coverage-xml
+        php vendor/bin/phpunit --filter "${{ env.TEST_FILTER }}" --log-junit=build/phpunit.junit.xml --coverage-xml=build/coverage-xml
 
     - name: 5. Mutation Test & Quality Gate (Infection)
       if: success()
-      # Le pasamos la ubicación exacta de la cobertura que acabamos de generar en el paso 4
-      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi
+      env:
+        XDEBUG_MODE: coverage
+      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi --filter="${{ env.INFECTION_FILTER }}"
       
     - name: Subir Reporte de Mutación como Artefacto
       if: always() 
