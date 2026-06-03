@@ -23,10 +23,10 @@ jobs:
     - name: Checkout del código
       uses: actions/checkout@v4
 
-    - name: Configurar PHP 8.2 con PCOV
+    - name: Configurar PHP 8.5.6 con PCOV
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2'
+        php-version: '8.5.6'
         coverage: pcov
         extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, pcov
         
