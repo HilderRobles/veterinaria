@@ -110,7 +110,7 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         ),
         'T' => 
         array (
-            'Tests\\' => 6,
+            'Test\\' => 5,
         ),
         'S' => 
         array (
@@ -163,7 +163,6 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         ),
         'I' => 
         array (
-            'Infrastructure\\' => 15,
             'Infection\\StreamWrapper\\' => 24,
             'Infection\\Mutator\\' => 18,
             'Infection\\ExtensionInstaller\\' => 29,
@@ -182,7 +181,6 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         array (
             'DuoClock\\' => 9,
             'Dotenv\\' => 7,
-            'Domain\\' => 7,
             'DeepCopy\\' => 9,
             'DIContainer\\' => 12,
         ),
@@ -204,7 +202,7 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         ),
         'A' => 
         array (
-            'Application\\' => 12,
+            'App\\' => 4,
         ),
     );
 
@@ -213,7 +211,7 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Tests\\' => 
+        'Test\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
@@ -341,10 +339,6 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         array (
             0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
         ),
-        'Infrastructure\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Infrastructure',
-        ),
         'Infection\\StreamWrapper\\' => 
         array (
             0 => __DIR__ . '/..' . '/infection/include-interceptor/src',
@@ -380,10 +374,6 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
-        ),
-        'Domain\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Domain',
         ),
         'DeepCopy\\' => 
         array (
@@ -433,9 +423,9 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Behat',
         ),
-        'Application\\' => 
+        'App\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Application',
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

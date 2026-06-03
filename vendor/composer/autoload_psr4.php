@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
-    'Tests\\' => array($baseDir . '/tests'),
+    'Test\\' => array($baseDir . '/tests'),
     'Symfony\\Polyfill\\Php85\\' => array($vendorDir . '/symfony/polyfill-php85'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
@@ -39,7 +39,6 @@ return array(
     'MabeEnum\\' => array($vendorDir . '/marc-mabe/php-enum/src'),
     'Later\\' => array($vendorDir . '/sanmai/later/src'),
     'JsonSchema\\' => array($vendorDir . '/justinrainbow/json-schema/src/JsonSchema'),
-    'Infrastructure\\' => array($baseDir . '/Infrastructure'),
     'Infection\\StreamWrapper\\' => array($vendorDir . '/infection/include-interceptor/src'),
     'Infection\\Mutator\\' => array($vendorDir . '/infection/mutator/src'),
     'Infection\\ExtensionInstaller\\' => array($vendorDir . '/infection/extension-installer/src'),
@@ -49,7 +48,6 @@ return array(
     'Fidry\\CpuCoreCounter\\' => array($vendorDir . '/fidry/cpu-core-counter/src'),
     'DuoClock\\' => array($vendorDir . '/sanmai/duoclock/src'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
-    'Domain\\' => array($baseDir . '/Domain'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'DIContainer\\' => array($vendorDir . '/sanmai/di-container/src'),
     'Composer\\XdebugHandler\\' => array($vendorDir . '/composer/xdebug-handler/src'),
@@ -62,5 +60,5 @@ return array(
     'Behat\\Gherkin\\' => array($vendorDir . '/behat/gherkin/src'),
     'Behat\\Config\\' => array($vendorDir . '/behat/behat/src/Behat/Config'),
     'Behat\\Behat\\' => array($vendorDir . '/behat/behat/src/Behat/Behat'),
-    'Application\\' => array($baseDir . '/Application'),
+    'App\\' => array($baseDir . '/src'),
 );

@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         colors="true"
-         stopOnFailure="false"
-         executionOrder="default">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         cacheDirectory=".phpunit.cache"
+         executionOrder="depends,defects"
+         requireCoverageMetadata="true"
+         beStrictAboutCoverageMetadata="true"
+         beStrictAboutOutputDuringTests="true"
+         displayDetailsOnPhpunitDeprecations="true"
+         failOnPhpunitDeprecation="true"
+         failOnRisky="true"
+         failOnWarning="true">
     <testsuites>
-        <testsuite name="Domain Tests">
-            <directory>tests/Domain</directory>
-        </testsuite>
-        <testsuite name="Application Tests">
-            <directory>tests/Application</directory>
+        <testsuite name="default">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
-    
-    <source>
+
+    <source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
         <include>
-            <directory>Domain</directory>
-            <directory>Application</directory>
+            <directory>src</directory>
         </include>
-        <exclude>
-            <directory>Infrastructure</directory>
-            <directory>tests</directory>
-            <directory>features</directory>
-            <directory>vendor</directory>
-        </exclude>
     </source>
 </phpunit>

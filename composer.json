@@ -2,15 +2,18 @@
     "name": "veterinaria/hexagonal",
     "autoload": {
         "psr-4": {
-            "Domain\\": "Domain/",
-            "Application\\": "Application/",
-            "Infrastructure\\": "Infrastructure/"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Test\\": "tests/"
         }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5.63",
@@ -21,10 +24,5 @@
         "allow-plugins": {
             "infection/extension-installer": true
         }
-    },
-    "require": {
-        "vlucas/phpdotenv": "^5.6",
-        "ext-pdo": "*",
-        "ext-pdo_mysql": "*"
     }
 }
