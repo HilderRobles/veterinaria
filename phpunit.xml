@@ -11,15 +11,26 @@
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
          failOnWarning="true">
-    <testsuites>
-        <testsuite name="default">
-            <directory>tests</directory>
+   <testsuites>
+        <testsuite name="Domain Tests">
+            <directory>tests/Cliente/Dominio</directory>
+            <directory>tests/Cliente/Aplicacion</directory>
+            <directory>tests/Cita/Dominio</directory>
+            <directory>tests/Cita/Aplicacion</directory>
+        </testsuite>
+
+        <testsuite name="Integration Tests">
+            <directory>tests/Cliente/Infraestructura</directory>
+            <directory>tests/Cita/Infraestructura</directory>
         </testsuite>
     </testsuites>
 
-    <source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
+    <source>
         <include>
-            <directory>src</directory>
+            <directory>src/Cliente/Dominio</directory>
+            <directory>src/Cliente/Aplicacion</directory>
+            <directory>src/Cita/Dominio</directory>
+            <directory>src/Cita/Aplicacion</directory>
         </include>
     </source>
 </phpunit>

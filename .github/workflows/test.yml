@@ -3,7 +3,6 @@ name: Hito 1 - Pipeline de Calidad CI/CD (Multi-Módulo)
 on:
   push:
     branches: [ "main", "feature/*" ]
-    # OPTIMIZACIÓN 1: Solo corre si cambias código en los módulos o configs
     paths:
       - 'src/**'
       - 'tests/**'
@@ -24,11 +23,11 @@ jobs:
     - name: Checkout del código
       uses: actions/checkout@v4
 
-    - name: Configurar PHP 8.2
+    - name: Configurar PHP 8.2 con PCOV
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.2'
-        coverage: pcov # PCOV es obligatorio aquí; xdebug con muchos módulos sería lentísimo
+        coverage: pcov
         extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, pcov
         
     - name: Cache de dependencias de Composer
@@ -41,29 +40,27 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Instalar dependencias
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install --prefer-dist --no-progress
 
-    # 1. Lint - Revisa la sintaxis de Citas, Users, Shared, etc.
     - name: 1. Lint (Sintaxis de todos los módulos)
       run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" || true
 
-    # 2. Unit Tests - Ejecuta los tests de Dominio de TODOS los módulos a la vez
     - name: 2. Unit Tests (Dominio Global)
       run: php vendor/bin/phpunit --testsuite "Domain Tests"
 
-    # 3. Integration Tests - Ejecuta la infraestructura de TODOS los módulos
     - name: 3. Integration Tests (Infraestructura Global)
       run: php vendor/bin/phpunit --testsuite "Integration Tests"
       
-    # 4. Generar reporte Clover global para Infection
-    - name: 4. Generar Reporte de Cobertura
-      run: php vendor/bin/phpunit --coverage-clover build/clover.xml --coverage-text
+    - name: 4. Generar Reporte de Cobertura XML para Infection
+      # Creamos la carpeta build y generamos la cobertura limpia requerida por Infection
+      run: |
+        mkdir -p build
+        php vendor/bin/phpunit --log-junit=build/phpunit.junit.xml --coverage-xml=build/coverage-xml
 
-    # 5. Pruebas de Mutación - Infection atacará a Citas, Users, etc., en paralelo
-    - name: 5. Mutation Test & Quality Gate
+    - name: 5. Mutation Test & Quality Gate (Infection)
       if: success()
-      # Usamos --threads=max para procesar todas las carpetas rápido
-      run: php vendor/bin/infection --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations
+      # Le pasamos la ubicación exacta de la cobertura que acabamos de generar en el paso 4
+      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi
       
     - name: Subir Reporte de Mutación como Artefacto
       if: always() 
@@ -71,6 +68,6 @@ jobs:
       with:
         name: reporte-mutacion-global
         path: |
-          build/infection/
+          build/
           infection-log.txt
-        retention-days: 7
+        retention-days: 5
