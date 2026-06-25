@@ -18,6 +18,7 @@
         </testsuite>
         <testsuite name="Integration Tests">
             <directory>tests/Cliente/Infraestructura</directory>
+            <directory>tests/Inventario/Aplicacion</directory>
         </testsuite>
     </testsuites>
 

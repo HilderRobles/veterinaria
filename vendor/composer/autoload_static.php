@@ -104,15 +104,15 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
     );
 
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'Webmozart\\Assert\\' => 17,
         ),
-        'T' => 
+        'T' =>
         array (
             'Test\\' => 5,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php85\\' => 23,
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -135,7 +135,7 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Config\\' => 25,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Log\\' => 8,
             'Psr\\EventDispatcher\\' => 20,
@@ -145,23 +145,23 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
         ),
-        'O' => 
+        'O' =>
         array (
             'OndraM\\CiDetector\\' => 18,
         ),
-        'M' => 
+        'M' =>
         array (
             'MabeEnum\\' => 9,
         ),
-        'L' => 
+        'L' =>
         array (
             'Later\\' => 6,
         ),
-        'J' => 
+        'J' =>
         array (
             'JsonSchema\\' => 11,
         ),
-        'I' => 
+        'I' =>
         array (
             'Infection\\StreamWrapper\\' => 24,
             'Infection\\Mutator\\' => 18,
@@ -169,28 +169,28 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
             'Infection\\AbstractTestFramework\\' => 32,
             'Infection\\' => 10,
         ),
-        'G' => 
+        'G' =>
         array (
             'GrahamCampbell\\ResultType\\' => 26,
         ),
-        'F' => 
+        'F' =>
         array (
             'Fidry\\CpuCoreCounter\\' => 21,
         ),
-        'D' => 
+        'D' =>
         array (
             'DuoClock\\' => 9,
             'Dotenv\\' => 7,
             'DeepCopy\\' => 9,
             'DIContainer\\' => 12,
         ),
-        'C' => 
+        'C' =>
         array (
             'Composer\\XdebugHandler\\' => 23,
             'Composer\\Pcre\\' => 14,
             'ColinODell\\Json5\\' => 17,
         ),
-        'B' => 
+        'B' =>
         array (
             'Behat\\Transformation\\' => 21,
             'Behat\\Testwork\\' => 15,
@@ -200,230 +200,230 @@ class ComposerStaticInit5e77af8d431fbf5780649199e0fa8f21
             'Behat\\Config\\' => 13,
             'Behat\\Behat\\' => 12,
         ),
-        'A' => 
+        'A' =>
         array (
             'App\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Webmozart\\Assert\\' => 
+        'Webmozart\\Assert\\' =>
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'Test\\' => 
+        'Test\\' =>
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
-        'Symfony\\Polyfill\\Php85\\' => 
+        'Symfony\\Polyfill\\Php85\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php85',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Symfony\\Polyfill\\Mbstring\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
-        'Symfony\\Polyfill\\Intl\\Grapheme\\' => 
+        'Symfony\\Polyfill\\Intl\\Grapheme\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme',
         ),
-        'Symfony\\Polyfill\\Ctype\\' => 
+        'Symfony\\Polyfill\\Ctype\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Contracts\\Translation\\' => 
+        'Symfony\\Contracts\\Translation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/translation-contracts',
         ),
-        'Symfony\\Contracts\\Service\\' => 
+        'Symfony\\Contracts\\Service\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
         ),
-        'Symfony\\Contracts\\EventDispatcher\\' => 
+        'Symfony\\Contracts\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
         ),
-        'Symfony\\Component\\Yaml\\' => 
+        'Symfony\\Component\\Yaml\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-        'Symfony\\Component\\VarExporter\\' => 
+        'Symfony\\Component\\VarExporter\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/var-exporter',
         ),
-        'Symfony\\Component\\Translation\\' => 
+        'Symfony\\Component\\Translation\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
-        'Symfony\\Component\\String\\' => 
+        'Symfony\\Component\\String\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/string',
         ),
-        'Symfony\\Component\\Process\\' => 
+        'Symfony\\Component\\Process\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
         ),
-        'Symfony\\Component\\Finder\\' => 
+        'Symfony\\Component\\Finder\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/finder',
         ),
-        'Symfony\\Component\\Filesystem\\' => 
+        'Symfony\\Component\\Filesystem\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/filesystem',
         ),
-        'Symfony\\Component\\EventDispatcher\\' => 
+        'Symfony\\Component\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
         ),
-        'Symfony\\Component\\DependencyInjection\\' => 
+        'Symfony\\Component\\DependencyInjection\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/dependency-injection',
         ),
-        'Symfony\\Component\\Console\\' => 
+        'Symfony\\Component\\Console\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'Symfony\\Component\\Config\\' => 
+        'Symfony\\Component\\Config\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/config',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
-        'Psr\\EventDispatcher\\' => 
+        'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Psr\\Clock\\' => 
+        'Psr\\Clock\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/clock/src',
         ),
-        'Pipeline\\' => 
+        'Pipeline\\' =>
         array (
             0 => __DIR__ . '/..' . '/sanmai/pipeline/src',
         ),
-        'PhpParser\\' => 
+        'PhpParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
-        'PhpOption\\' => 
+        'PhpOption\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
-        'OndraM\\CiDetector\\' => 
+        'OndraM\\CiDetector\\' =>
         array (
             0 => __DIR__ . '/..' . '/ondram/ci-detector/src',
         ),
-        'MabeEnum\\' => 
+        'MabeEnum\\' =>
         array (
             0 => __DIR__ . '/..' . '/marc-mabe/php-enum/src',
         ),
-        'Later\\' => 
+        'Later\\' =>
         array (
             0 => __DIR__ . '/..' . '/sanmai/later/src',
         ),
-        'JsonSchema\\' => 
+        'JsonSchema\\' =>
         array (
             0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
         ),
-        'Infection\\StreamWrapper\\' => 
+        'Infection\\StreamWrapper\\' =>
         array (
             0 => __DIR__ . '/..' . '/infection/include-interceptor/src',
         ),
-        'Infection\\Mutator\\' => 
+        'Infection\\Mutator\\' =>
         array (
             0 => __DIR__ . '/..' . '/infection/mutator/src',
         ),
-        'Infection\\ExtensionInstaller\\' => 
+        'Infection\\ExtensionInstaller\\' =>
         array (
             0 => __DIR__ . '/..' . '/infection/extension-installer/src',
         ),
-        'Infection\\AbstractTestFramework\\' => 
+        'Infection\\AbstractTestFramework\\' =>
         array (
             0 => __DIR__ . '/..' . '/infection/abstract-testframework-adapter/src',
         ),
-        'Infection\\' => 
+        'Infection\\' =>
         array (
             0 => __DIR__ . '/..' . '/infection/infection/src',
         ),
-        'GrahamCampbell\\ResultType\\' => 
+        'GrahamCampbell\\ResultType\\' =>
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
-        'Fidry\\CpuCoreCounter\\' => 
+        'Fidry\\CpuCoreCounter\\' =>
         array (
             0 => __DIR__ . '/..' . '/fidry/cpu-core-counter/src',
         ),
-        'DuoClock\\' => 
+        'DuoClock\\' =>
         array (
             0 => __DIR__ . '/..' . '/sanmai/duoclock/src',
         ),
-        'Dotenv\\' => 
+        'Dotenv\\' =>
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'DeepCopy\\' => 
+        'DeepCopy\\' =>
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
-        'DIContainer\\' => 
+        'DIContainer\\' =>
         array (
             0 => __DIR__ . '/..' . '/sanmai/di-container/src',
         ),
-        'Composer\\XdebugHandler\\' => 
+        'Composer\\XdebugHandler\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/xdebug-handler/src',
         ),
-        'Composer\\Pcre\\' => 
+        'Composer\\Pcre\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/pcre/src',
         ),
-        'ColinODell\\Json5\\' => 
+        'ColinODell\\Json5\\' =>
         array (
             0 => __DIR__ . '/..' . '/colinodell/json5/src',
         ),
-        'Behat\\Transformation\\' => 
+        'Behat\\Transformation\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Transformation',
         ),
-        'Behat\\Testwork\\' => 
+        'Behat\\Testwork\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Testwork',
         ),
-        'Behat\\Step\\' => 
+        'Behat\\Step\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Step',
         ),
-        'Behat\\Hook\\' => 
+        'Behat\\Hook\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Hook',
         ),
-        'Behat\\Gherkin\\' => 
+        'Behat\\Gherkin\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/gherkin/src',
         ),
-        'Behat\\Config\\' => 
+        'Behat\\Config\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Config',
         ),
-        'Behat\\Behat\\' => 
+        'Behat\\Behat\\' =>
         array (
             0 => __DIR__ . '/..' . '/behat/behat/src/Behat/Behat',
         ),
-        'App\\' => 
+        'App\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

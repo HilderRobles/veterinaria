@@ -3,7 +3,7 @@
         'name' => 'veterinaria/hexagonal',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6fe12e8a548647b123bc7917824239614e030526',
+        'reference' => '67a34731d692acdeee7c51bd3e270cca7db1fb7a',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -703,7 +703,7 @@
         'veterinaria/hexagonal' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6fe12e8a548647b123bc7917824239614e030526',
+            'reference' => '67a34731d692acdeee7c51bd3e270cca7db1fb7a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
