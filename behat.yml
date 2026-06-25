@@ -1,5 +1,7 @@
 default:
   suites:
-    default:
-      contexts:
-        - FeatureContext
+    registrar_cliente:
+      paths:    
+        - '%paths.base%/tests/Aplicacion/RegistrarCliente.feature'
+      contexts: 
+        - Test\Aplicacion\RegistrarClienteContext

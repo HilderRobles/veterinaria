@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Cliente\Dominio;
+namespace Test\Cliente\Dominio;
 
 use App\Cliente\Dominio\Cliente;
 use App\Cliente\Dominio\ObjetoValor\ClienteId;

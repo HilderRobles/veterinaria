@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Cliente\Dominio\ObjetoValor;
+namespace Test\Cliente\Dominio\ObjetoValor;
 
 use App\Cliente\Dominio\ObjetoValor\Telefono;
 use PHPUnit\Framework\TestCase;

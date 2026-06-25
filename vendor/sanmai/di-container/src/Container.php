@@ -52,6 +52,8 @@ use function Pipeline\take;
 use function reset;
 use function sprintf;
 use function str_contains;
+use function class_exists;
+use function interface_exists;
 
 class Container implements ContainerInterface
 {
@@ -59,6 +61,11 @@ class Container implements ContainerInterface
      * @var array<class-string<object>|non-empty-string, object>
      */
     private array $values = [];
+
+    /**
+     * @var array<class-string<object>|non-empty-string, object>
+     */
+    private array $prebuilt = [];
 
     /**
      * @var array<class-string<object>|non-empty-string, callable>
@@ -70,13 +77,19 @@ class Container implements ContainerInterface
      */
     private array $builders = [];
 
+    /** Placeholder marking an unresolved parameter */
+    private readonly object $missing;
+
     /**
      * @param iterable<class-string<object>, callable|class-string<Builder<object>>> $values
      * @param iterable<non-empty-string, callable|class-string<Builder<object>>> $bindings
      */
     public function __construct(iterable $values = [], iterable $bindings = [])
     {
+        // Cache the value letting a builder override it
         $this->values[ContainerInterface::class] = $this;
+
+        $this->missing = new class {};
 
         foreach ($values as $id => $value) {
             $this->set($id, $value);
@@ -129,10 +142,12 @@ class Container implements ContainerInterface
      */
     public function inject(string $id, object $value): void
     {
-        unset($this->factories[$id], $this->builders[$id]);
+        // Injected pre-built dependencies override everything else at the time of injection
+        unset($this->values[$id], $this->factories[$id], $this->builders[$id]);
 
-        /** @var class-string<T> $id */
-        $this->setValueOrThrow($id, $value);
+        self::assertType($id, $value);
+
+        $this->prebuilt[$id] = $value;
     }
 
     /**
@@ -145,21 +160,24 @@ class Container implements ContainerInterface
      */
     private function setValueOrThrow(string $id, object $value): object
     {
+        self::assertType($id, $value);
+
+        $this->values[$id] = $value;
+
+        /** @var T */
+        return $value;
+    }
+
+    private static function assertType(string $id, object $value): void
+    {
         // Break the contract to skip the type check for IDs that do not look like a valid namespaced PHP class name
         if (str_contains($id, '.') || !str_contains($id, '\\')) {
-            $this->values[$id] = $value;
-
-            /** @var T */
-            return $value;
+            return;
         }
 
         if (!$value instanceof $id) {
             throw new Exception(sprintf('Expected instance of %s, got %s', $id, get_class($value)));
         }
-
-        $this->values[$id] = $value;
-
-        return $value;
     }
 
     /**
@@ -186,6 +204,11 @@ class Container implements ContainerInterface
             $value = $this->factories[$id]($this);
 
             return $this->setValueOrThrow($id, $value);
+        }
+
+        // Consider pre-built instances last to give way to factories and builders
+        if (array_key_exists($id, $this->prebuilt)) {
+            return $this->prebuilt[$id];
         }
 
         $value = $this->createService($id);
@@ -217,61 +240,85 @@ class Container implements ContainerInterface
         }
 
         $resolvedArguments = take($constructor->getParameters())
-            ->map($this->resolveParameter(...))
+            ->cast($this->findParameterValue(...))
+            ->select($this->notMissing(...))
             ->toList();
 
+        $requiredNumberOfParameters = $constructor->getNumberOfParameters();
+
+        // Account for the variadic parameter (there can be only one, always optional)
+        if ($constructor->isVariadic()) {
+            $requiredNumberOfParameters -= 1;
+        }
+
         // Check if we identified all parameters for the service
-        if (count($resolvedArguments) !== $constructor->getNumberOfParameters()) {
+        if (count($resolvedArguments) !== $requiredNumberOfParameters) {
             return null;
         }
 
         return $reflectionClass->newInstanceArgs($resolvedArguments);
     }
 
-    /**
-     * Builds a potentially incomplete list of arguments for a constructor; as list of arguments may
-     * contain null values, we use a generator that can yield none or one value as an option type.
-     *
-     * @return iterable<array-key, object>
-     */
-    private function resolveParameter(ReflectionParameter $parameter): iterable
+    private function notMissing(mixed $value): bool
     {
-        // Variadic parameters need hand-weaving
+        return $this->missing !== $value;
+    }
+
+    private function resolveDefaultValue(ReflectionParameter $parameter): mixed
+    {
+        return match ($parameter->isDefaultValueAvailable()) {
+            true => $parameter->getDefaultValue(),
+            default => $this->missing,
+        };
+    }
+
+    /**
+     * Returns a possible argument value for the constructor; it can return a specific computed
+     * value just as well as a placeholder for the missing value.
+     *
+     * @return mixed
+     */
+    private function findParameterValue(ReflectionParameter $parameter): mixed
+    {
+        // Variadic parameters imply collections, which we do not provide, for now
         if ($parameter->isVariadic()) {
-            return;
+            return $this->missing;
         }
 
         $paramType = $parameter->getType();
 
         // Not considering composite types, such as unions or intersections, for now
         if (!$paramType instanceof ReflectionNamedType) {
-            throw new Exception('Composite types are not supported');
-        }
-
-        // Only attempt to resolve a non-built-in named type (a class/interface)
-        if ($paramType->isBuiltin()) {
-            return;
+            return $this->resolveDefaultValue($parameter);
         }
 
         /** @var class-string $paramTypeName */
         $paramTypeName = $paramType->getName();
 
+        // Defer to a default value for built-in types and classes that cannot be reflected
+        if (!class_exists($paramTypeName) && !interface_exists($paramTypeName)) {
+            return $this->resolveDefaultValue($parameter);
+        }
+
         // Found an instantiable class, done
         if ((new ReflectionClass($paramTypeName))->isInstantiable()) {
-            yield $this->get($paramTypeName);
-
-            return;
+            return $this->get($paramTypeName);
         }
 
         // Look for a factory that can create an instance of an interface or abstract class
         $matchingTypes = $this->providersForType($paramTypeName);
 
-        // We expect exactly one factory to match the type, otherwise we cannot resolve the parameter
-        if (1 !== count($matchingTypes)) {
-            return;
+        // We expect exactly one factory to match the type to resolve a parameter unambiguously
+        if (1 === count($matchingTypes)) {
+            return $this->get(reset($matchingTypes));
         }
 
-        yield $this->get(reset($matchingTypes));
+        // But we should also consider default values if present and no default provider
+        if ([] === $matchingTypes) {
+            return $this->resolveDefaultValue($parameter);
+        }
+
+        return $this->missing;
     }
 
     /**
@@ -285,7 +332,7 @@ class Container implements ContainerInterface
     private function providersForType(string $type): array
     {
         /** @var list<class-string<object>> */
-        return take($this->factories, $this->builders)
+        return take($this->factories, $this->builders, $this->prebuilt)
             ->keys()
             ->filter(static fn(string $id) => is_a($id, $type, true))
             ->toList();
