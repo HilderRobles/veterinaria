@@ -20,6 +20,7 @@ public static function despachar(string $metodo, string $path, array $input, \PD
         $repositorio = new PdoRepositorioCliente($pdo);
         $cifrador    = new PhpCifradorContrasena();
         $enviador    = new PhpEnviadorNotificaciones();
+        $validadorInexistencia = new PhpValidadorExistenciaCorreo(); // 🎯 Implementación real para tu nuevo validador
 
         // 🟢 NUEVA RUTA: MOSTRAR / LISTAR TODOS LOS CLIENTES
         if ($metodo === 'GET' && $path === '/api/clientes') {
@@ -35,7 +36,7 @@ public static function despachar(string $metodo, string $path, array $input, \PD
                 $input['nombre'] ?? '', $input['email'] ?? '', 
                 $input['telefono'] ?? '', $input['password'] ?? ''
             );
-            (new RegistrarCliente($repositorio, $cifrador))->ejecutar($peticion);
+            (new RegistrarCliente($repositorio, $cifrador, $validadorInexistencia))->ejecutar($peticion);
             
             http_response_code(201);
             $respuesta = ['mensaje' => 'Cliente registrado exitosamente.'];
