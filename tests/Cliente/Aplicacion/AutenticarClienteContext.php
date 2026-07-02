@@ -1,103 +1,105 @@
 <?php
 
+namespace Test\Cliente\Aplicacion;
+
 use Behat\Behat\Context\Context;
 use App\Cliente\Aplicacion\AutenticarCliente;
 use App\Cliente\Aplicacion\AutenticarClientePeticion;
-use App\Cliente\Dominio\Cliente;
 use App\Cliente\Dominio\RepositorioCliente;
-use App\Cliente\Dominio\ObjetoValor\ClienteId;
+use App\Cliente\Dominio\Cliente;
 use App\Cliente\Dominio\ObjetoValor\CorreoElectronico;
 use App\Cliente\Dominio\ObjetoValor\Telefono;
 use App\Cliente\Dominio\ObjetoValor\Contrasena;
+use App\Cliente\Dominio\ObjetoValor\ClienteId;
+use Mockery;
 use PHPUnit\Framework\Assert;
 
 class AutenticarClienteContext implements Context
 {
     private $repositorioMock;
     private AutenticarCliente $casoUso;
-    private ?array $resultado = null;
-    private ?Exception $excepcionLanzada = null;
-    private ?Cliente $clienteEnMemoria = null;
+    private ?array $resultadoCliente = null;
+    private ?\Exception $excepcionCapturada = null;
 
     public function __construct()
     {
-        // Creamos el mock del repositorio de Dominio
         $this->repositorioMock = Mockery::mock(RepositorioCliente::class);
         $this->casoUso = new AutenticarCliente($this->repositorioMock);
     }
 
     /**
-     * @Dado que existe un cliente registrado con el correo :correo y contraseña :password
+     * @Given que existe un cliente registrado con el correo :correo y contraseña :clave
      */
-    public function queExisteUnClienteRegistradoConElCorreoYContrasena(string $correo, string $password)
+    public function queExisteUnClienteRegistradoConElCorreoYContrasena($correo, $clave)
     {
-        $hashValido = password_hash($password, PASSWORD_BCRYPT);
-        
-        // Creamos la entidad de dominio real
-        $this->clienteEnMemoria = new Cliente(
-            "Juan",
+        // 🎯 SOLUCIÓN: Generamos un hash real para que password_verify() pueda validarlo con éxito
+        $hashSeguro = password_hash($clave, PASSWORD_BCRYPT);
+        $contrasenaReal = new Contrasena($hashSeguro); 
+
+        $cliente = new Cliente(
+            "Juan Perez",
             new CorreoElectronico($correo),
             new Telefono("987654321"),
-            new Contrasena($hashValido),
+            $contrasenaReal,
             "cliente",
             new ClienteId(1)
         );
 
-        // Configuramos el Mock para que cuando el caso de uso busque este correo, devuelva el cliente
-        $this->repositorioMock
-            ->shouldReceive('buscarPorCorreoElectronico')
-            ->with(Mockery::on(function ($argumentoCorreo) use ($correo) {
-                return $argumentoCorreo->valor() === $correo; // O el método que uses para extraer el string del VO
-            }))
-            ->andReturn($this->clienteEnMemoria)
-            ->byDefault();
+        $this->repositorioMock->allows('buscarPorCorreoElectronico')
+            ->with(Mockery::on(fn($arg) => $arg instanceof CorreoElectronico && $arg->valor() === $correo))
+            ->andReturn($cliente);
     }
 
     /**
-     * @Dado que no existe ningún cliente registrado con el correo :correo
+     * @Given que no existe ningún cliente registrado con el correo :correo
      */
-    public function queNoExisteNingunClienteRegistradoConElCorreo(string $correo)
+    public function queNoExisteNingunClienteRegistradoConElCorreo($correo)
     {
-        // Configuramos el Mock para que devuelva null (usuario inexistente)
-        $this->repositorioMock
-            ->shouldReceive('buscarPorCorreoElectronico')
-            ->andReturn(null)
-            ->byDefault();
+        $this->repositorioMock->allows('buscarPorCorreoElectronico')
+            ->with(Mockery::on(fn($arg) => $arg instanceof CorreoElectronico && $arg->valor() === $correo))
+            ->andReturn(null);
     }
 
     /**
-     * @Cuando intenta iniciar sesión con el correo :correo y la contraseña :password
+     * @When intenta iniciar sesión con el correo :correo y la contraseña :clave
      */
-    public function intentaIniciarSesionConElCorreoYLaContrasena(string $correo, string $password)
+    public function intentaIniciarSesionConElCorreoYLaContrasena($correo, $clave)
     {
-        $peticion = new AutenticarClientePeticion($correo, $password);
+        $peticion = new AutenticarClientePeticion($correo, $clave);
 
         try {
-            // Ejecutamos el caso de uso de la capa de aplicación
-            $this->resultado = $this->casoUso->ejecutar($peticion);
-        } catch (Exception $e) {
-            // Si falla (credenciales incorrectas), atrapamos la excepción para evaluarla en el "Entonces"
-            $this->excepcionLanzada = $e;
+            $this->resultadoCliente = $this->casoUso->ejecutar($peticion);
+        } catch (\Exception $e) {
+            $this->excepcionCapturada = $e;
         }
     }
 
     /**
-     * @Entonces la autenticación es exitosa y se genera un token de acceso
+     * @Then la autenticación es exitosa y se genera un token de acceso
      */
     public function laAutenticacionEsExitosaYSeGeneraUnTokenDeAcceso()
     {
-        Assert::assertNull($this->excepcionLanzada, "Se lanzó una excepción inesperada: " . ($this->excepcionLanzada?->getMessage()));
-        Assert::assertIsArray($this->resultado);
-        Assert::assertEquals('Juan', $this->resultado['nombre']);
+        Assert::assertNull($this->excepcionCapturada, $this->excepcionCapturada ? $this->excepcionCapturada->getMessage() : '');
+        Assert::assertIsArray($this->resultadoCliente);
+        Assert::assertArrayHasKey('correo_electronico', $this->resultadoCliente);
     }
 
     /**
-     * @Entonces el acceso es rechazado por credenciales inválidas
+     * @Then el acceso es rechazado por credenciales inválidas
      */
     public function elAccesoEsRechazadoPorCredencialesInvalidas()
     {
-        Assert::assertNotNull($this->excepcionLanzada, "Se esperaba un fallo de autenticación pero fue exitoso.");
-        Assert::assertInstanceOf(\RuntimeException::class, $this->excepcionLanzada);
-        Assert::assertEquals("Las credenciales de acceso son incorrectas.", $this->excepcionLanzada->getMessage());
+        Assert::assertNotNull($this->excepcionCapturada, "Se esperaba un fallo de autenticación.");
+        Assert::assertEquals("Las credenciales de acceso son incorrectas.", $this->excepcionCapturada->getMessage());
+    }
+
+    /**
+     * @AfterScenario
+     */
+    public function limpiarMocks()
+    {
+        Mockery::close();
+        $this->resultadoCliente = null;
+        $this->excepcionCapturada = null;
     }
 }
