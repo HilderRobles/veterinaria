@@ -11,13 +11,18 @@
          failOnPhpunitDeprecation="true"
          failOnRisky="true"
          failOnWarning="true">
-   <testsuites>
+
+    <testsuites>
         <testsuite name="Domain Tests">
             <directory>tests/Cliente/Dominio</directory>
             <directory>tests/Cliente/Aplicacion</directory>
+            <directory>tests/HistorialClinico/Dominio</directory>
+            <directory>tests/HistorialClinico/Aplicacion</directory>
         </testsuite>
+
         <testsuite name="Integration Tests">
             <directory>tests/Cliente/Infraestructura</directory>
+            <directory>tests/HistorialClinico/Infraestructura</directory>
         </testsuite>
     </testsuites>
 
@@ -27,6 +32,9 @@
             <directory>src/Cliente/Aplicacion</directory>
             <directory>src/Cita/Dominio</directory>
             <directory>src/Cita/Aplicacion</directory>
+            <directory>src/HistorialClinico/Dominio</directory>
+            <directory>src/HistorialClinico/Aplicacion</directory>
+            <directory>src/HistorialClinico/Infraestructura</directory>
         </include>
     </source>
 </phpunit>

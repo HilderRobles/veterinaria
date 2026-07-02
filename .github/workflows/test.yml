@@ -16,8 +16,8 @@ on:
       - 'tests/**'
 
 env:
-  TEST_FILTER: "Cliente"                            # 🎯 Módulo actual en PHPUnit
-  INFECTION_FILTER: "src/Cliente/Dominio,src/Cliente/Aplicacion" # 🎯 Módulo actual en Infection
+  TEST_FILTER: "HistorialClinico"
+  INFECTION_FILTER: "src/HistorialClinico/Dominio,src/HistorialClinico/Aplicacion"
 
 jobs:
   quality-pipeline:
