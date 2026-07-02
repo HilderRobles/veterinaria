@@ -11,3 +11,9 @@ default:
         - '%paths.base%/tests/Cliente/Aplicacion/AutenticarCliente.feature'
       contexts: 
         - Test\Cliente\Aplicacion\AutenticarClienteContext
+    
+    eliminar_cliente:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/EliminarCliente.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\EliminarClienteContext
