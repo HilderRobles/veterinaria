@@ -30,6 +30,11 @@ class RegistrarClienteContext implements Context
         $this->repositorioMock = Mockery::mock(RepositorioCliente::class);
         $this->cifradorMock = Mockery::mock(CifradorContrasena::class);
         
+        // 💡 CONFIGURACIÓN POR DEFECTO: Evita el error de "no expectations were specified"
+        $this->cifradorMock->allows('cifrar')
+            ->byDefault()
+            ->andReturn(new Contrasena("hash_seguro_123"));
+
         $this->casoUso = new RegistrarCliente($this->repositorioMock, $this->cifradorMock);
     }
 
@@ -42,10 +47,6 @@ class RegistrarClienteContext implements Context
             ->with($correo)
             ->andReturn(null);
 
-        $this->cifradorMock->allows('cifrar')
-            ->andReturn(new Contrasena("hash_seguro_123"));
-
-        // Usamos spy/allows dinámico o dejamos la expectativa estricta para el caso de éxito
         $this->repositorioMock->expects('guardar')->zeroOrMoreTimes();
     }
 
@@ -75,8 +76,6 @@ class RegistrarClienteContext implements Context
      */
     public function queElSistemaRequiereUnProveedorDeCorreoElectronicoAutorizado()
     {
-        // Si el validador de dominio de correo se ejecuta en el caso de uso,
-        // necesitamos que buscarPorCorreoElectronico no rompa el flujo si llega a llamarse.
         $this->repositorioMock->allows('buscarPorCorreoElectronico')->andReturn(null);
         $this->repositorioMock->expects('guardar')->never();
     }
@@ -86,7 +85,6 @@ class RegistrarClienteContext implements Context
      */
     public function ejecutarIntentoDeRegistro($nombre, $correo)
     {
-        // 👈 Corregido: El orden de los argumentos coincide exactamente con la frase del Given/When
         $peticion = new RegistrarClientePeticion($nombre, $correo, "923456789", "Clave123");
         
         try {
@@ -102,7 +100,6 @@ class RegistrarClienteContext implements Context
      */
     public function ejecutarIntentoDeRegistroSoloCorreo($correo)
     {
-        // 👈 Separado en otra función para las frases que solo envían el correo electrónico
         $peticion = new RegistrarClientePeticion("Usuario Anonimo", $correo, "923456789", "Clave123");
         
         try {
@@ -143,6 +140,7 @@ class RegistrarClienteContext implements Context
      */
     public function limpiarMocks()
     {
+        // Ejecuta las verificaciones estrictas de Mockery (como ->expects('guardar')->never())
         Mockery::close();
     }
 }

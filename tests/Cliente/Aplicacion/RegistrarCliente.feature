@@ -15,7 +15,7 @@ Característica: Registro de Clientes
     Entonces el registro es rechazado por correo duplicado
 
   @ErrorCorreoInvalido
-  Escenario: Error porque el proveedor de correo no está permitido
-    Dado que el sistema requiere un proveedor de correo electrónico autorizado
+  Escenario: Error porque el correo no existe
+    Dado que el sistema requiere un correo electrónico vigente
     Cuando una persona intenta registrarse con el correo "pedro@outlook.com"
-    Entonces el registro es rechazado por proveedor de correo no válido
+    Entonces el registro es rechazado porque el correo no esta vigente

@@ -19,4 +19,11 @@ class CorreoElectronicoTest extends TestCase {
 
         new CorreoElectronico("correo-invalido.com");
     }
+    public function testDeberiaDetectarSiSonDiferentes(): void
+    {
+        $correoA = new CorreoElectronico("gon@gmail.com");
+        $correoB = new CorreoElectronico("pedro@outlook.com");
+
+        $this->assertFalse($correoA->esIgualA($correoB));
+    }
 }
