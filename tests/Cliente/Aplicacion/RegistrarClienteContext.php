@@ -6,6 +6,7 @@ use Behat\Behat\Context\Context;
 use App\Cliente\Aplicacion\RegistrarCliente;
 use App\Cliente\Aplicacion\RegistrarClientePeticion;
 use App\Cliente\Aplicacion\CifradorContrasena;
+use App\Cliente\Aplicacion\ValidadorExistenciaCorreo; // Ajustado al nuevo nombre estratégico
 use App\Cliente\Dominio\Cliente;
 use App\Cliente\Dominio\RepositorioCliente;
 use App\Cliente\Dominio\ObjetoValor\CorreoElectronico;
@@ -19,6 +20,7 @@ class RegistrarClienteContext implements Context
 {
     private $repositorioMock;
     private $cifradorMock;
+    private $validadorExistenciaMock;
     private RegistrarCliente $casoUso;
     private ?\Exception $excepcionCapturada = null;
 
@@ -29,13 +31,21 @@ class RegistrarClienteContext implements Context
     {
         $this->repositorioMock = Mockery::mock(RepositorioCliente::class);
         $this->cifradorMock = Mockery::mock(CifradorContrasena::class);
+        $this->validadorExistenciaMock = Mockery::mock(ValidadorExistenciaCorreo::class);
         
-        // 💡 CONFIGURACIÓN POR DEFECTO: Evita el error de "no expectations were specified"
+        // Configuración por defecto para el cifrador
         $this->cifradorMock->allows('cifrar')
             ->byDefault()
             ->andReturn(new Contrasena("hash_seguro_123"));
 
-        $this->casoUso = new RegistrarCliente($this->repositorioMock, $this->cifradorMock);
+        // Por defecto asumimos que los correos existen/son vigentes
+        $this->validadorExistenciaMock->allows('existe')->byDefault()->andReturn(true);
+
+        $this->casoUso = new RegistrarCliente(
+            $this->repositorioMock, 
+            $this->cifradorMock,
+            $this->validadorExistenciaMock
+        );
     }
 
     /**
@@ -43,8 +53,9 @@ class RegistrarClienteContext implements Context
      */
     public function queElCorreoEstaLibreParaRegistrarse($correo)
     {
+        // 💡 CORRECCIÓN: Permitimos cualquier objeto o validamos dinámicamente el valor interno
         $this->repositorioMock->allows('buscarPorCorreoElectronico')
-            ->with($correo)
+            ->with(Mockery::on(fn($arg) => $arg instanceof CorreoElectronico && $arg->valor() === $correo))
             ->andReturn(null);
 
         $this->repositorioMock->expects('guardar')->zeroOrMoreTimes();
@@ -64,19 +75,21 @@ class RegistrarClienteContext implements Context
             new ClienteId(1)
         );
 
+        // 💡 CORRECCIÓN: Coincidencia exacta con la instancia del Objeto de Valor
         $this->repositorioMock->allows('buscarPorCorreoElectronico')
-            ->with($correo)
+            ->with(Mockery::on(fn($arg) => $arg instanceof CorreoElectronico && $arg->valor() === $correo))
             ->andReturn($clienteExistente);
         
         $this->repositorioMock->expects('guardar')->never();
     }
 
     /**
-     * @Given que el sistema requiere un proveedor de correo electrónico autorizado
+     * @Given que el sistema requiere un correo electrónico vigente
      */
-    public function queElSistemaRequiereUnProveedorDeCorreoElectronicoAutorizado()
+    public function queElSistemaRequiereUnCorreoElectronicoVigente()
     {
-        $this->repositorioMock->allows('buscarPorCorreoElectronico')->andReturn(null);
+        // El validador externo dirá que no existe en el proveedor real
+        $this->validadorExistenciaMock->allows('existe')->andReturn(false);
         $this->repositorioMock->expects('guardar')->never();
     }
 
@@ -127,12 +140,12 @@ class RegistrarClienteContext implements Context
     }
 
     /**
-     * @Then el registro es rechazado por proveedor de correo no válido
+     * @Then el registro es rechazado porque el correo no esta vigente
      */
-    public function elRegistroEsRechazadoPorProveedorDeCorreoNoValido()
+    public function elRegistroEsRechazadoPorqueElCorreoNoEstaVigente()
     {
-        Assert::assertNotNull($this->excepcionCapturada, "Se esperaba una excepción de dominio de correo.");
-        Assert::assertEquals("Solo se permiten registros con cuentas de Gmail.", $this->excepcionCapturada->getMessage());
+        Assert::assertNotNull($this->excepcionCapturada, "Se esperaba una excepción de vigencia de correo.");
+        Assert::assertEquals("El correo electrónico proporcionado no está vigente.", $this->excepcionCapturada->getMessage());
     }
 
     /**
@@ -140,7 +153,6 @@ class RegistrarClienteContext implements Context
      */
     public function limpiarMocks()
     {
-        // Ejecuta las verificaciones estrictas de Mockery (como ->expects('guardar')->never())
         Mockery::close();
     }
 }
