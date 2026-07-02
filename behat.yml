@@ -29,4 +29,10 @@ default:
         - '%paths.base%/tests/Cliente/Aplicacion/ModificarPerfilCliente.feature'
       contexts: 
         - Test\Cliente\Aplicacion\ModificarPerfilClienteContext
+        
+    solicitar_recuperacion_contrasena:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/SolicitarRecuperacionContrasena.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\SolicitarRecuperacionContrasenaContext
       
