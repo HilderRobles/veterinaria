@@ -17,3 +17,9 @@ default:
         - '%paths.base%/tests/Cliente/Aplicacion/EliminarCliente.feature'
       contexts: 
         - Test\Cliente\Aplicacion\EliminarClienteContext
+        
+    listar_clientes:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/ListarClientes.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\ListarClientesContext

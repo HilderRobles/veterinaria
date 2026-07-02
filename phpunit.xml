@@ -23,9 +23,7 @@
     <source>
         <include>
             <directory>src/Cliente/Dominio</directory>
-            <directory>src/Cliente/Aplicacion</directory>
             <directory>src/Cita/Dominio</directory>
-            <directory>src/Cita/Aplicacion</directory>
         </include>
     </source>
 </phpunit>
