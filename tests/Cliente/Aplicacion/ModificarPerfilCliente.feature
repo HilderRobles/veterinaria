@@ -1,4 +1,3 @@
-Fragmento de código
 # language: es
 Característica: Modificar Perfil Completo de Cliente
   Como Cliente de la veterinaria

@@ -23,3 +23,10 @@ default:
         - '%paths.base%/tests/Cliente/Aplicacion/ListarClientes.feature'
       contexts: 
         - Test\Cliente\Aplicacion\ListarClientesContext
+    
+    modificar_perfil:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/ModificarPerfilCliente.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\ModificarPerfilClienteContext
+      
