@@ -15,6 +15,7 @@
         <testsuite name="Domain Tests">
             <directory>tests/Cliente/Dominio</directory>
         </testsuite>
+
     </testsuites>
 
     <source>
@@ -23,7 +24,7 @@
             <directory>src/Cita/Dominio</directory>
         </include>
     </source>
-    <logging>
-        <junit outputFile="build/junit.xml"/>
-    </logging>
+
 </phpunit>
+
+
