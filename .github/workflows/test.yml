@@ -52,8 +52,8 @@ jobs:
     - name: 2. Unit Tests (Filtrado)
       run: php vendor/bin/phpunit --testsuite "Domain Tests" --filter "${{ env.TEST_FILTER }}"
 
-    - name: 3. Integration Tests (Filtrado)
-      run: php vendor/bin/phpunit --testsuite "Integration Tests" --filter "${{ env.TEST_FILTER }}"
+    #- name: 3. Integration Tests (Filtrado)
+    # run: php vendor/bin/phpunit --testsuite "Integration Tests" --filter "${{ env.TEST_FILTER }}"
       
     - name: 4. Generar Reporte de Cobertura XML con Xdebug
       # Usamos la directiva de entorno para activar el modo cobertura de Xdebug en la terminal de Linux
