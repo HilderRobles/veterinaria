@@ -15,13 +15,11 @@
         <testsuite name="Domain Tests">
             <directory>tests/Cliente/Dominio</directory>
         </testsuite>
-
     </testsuites>
 
     <source>
         <include>
             <directory>src/Cliente/Dominio</directory>
-            <directory>src/Cita/Dominio</directory>
         </include>
     </source>
 
