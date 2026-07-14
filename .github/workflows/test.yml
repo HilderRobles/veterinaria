@@ -6,7 +6,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
-      - 'features/**' # 🎯 Detecta cambios también en tus archivos .feature de Behat
+      - 'features/**'
       - 'composer.json'
       - 'composer.lock'
       - '.github/workflows/**'
@@ -16,9 +16,6 @@ on:
       - 'src/**'
       - 'tests/**'
       - 'features/**'
-
-env:
-  INFECTION_FILTER: "src/Cliente/Dominio" # 🎯 Módulo actual a mutar en Infection
 
 jobs:
   quality-pipeline:
@@ -53,27 +50,29 @@ jobs:
     - name: 2. Ejecutar Unit Tests (Completo)
       run: php vendor/bin/phpunit --testsuite "Domain Tests"
 
-    ##- name: 3. Ejecutar Integration Tests (Completo - Excluido de Mutation)
-    #  run: php vendor/bin/phpunit --testsuite "Integration Tests"
+    # - name: 3. Ejecutar Integration Tests (Opcional - Descomentar si usas BDD/Infraestructura)
+    #   run: php vendor/bin/phpunit --testsuite "Integration Tests"
 
     - name: 4. Ejecutar Pruebas de Comportamiento (Behat)
       run: |
         mkdir -p build
-        # Usamos 'tee' para ver la salida en tiempo real en la consola y guardarla en un archivo para el reporte
-        vendor/bin/behat --format=pretty | tee build/behat-output.txt
+        # 💡 Corregido: Usamos 'php' antes del binario para solucionar el "Permission denied" de Linux
+        php vendor/bin/behat --format=pretty | tee build/behat-output.txt
       
-    - name: 5. Generar Reporte de Cobertura XML (Solo de Unit Tests para Infection)
+    - name: 5. Generar Reporte de Cobertura XML (De todos los Domain Tests para Infection)
       env:
         XDEBUG_MODE: coverage
       run: |
         mkdir -p build
         php vendor/bin/phpunit --testsuite "Domain Tests" --log-junit=build/phpunit.junit.xml --coverage-xml=build/coverage-xml
 
-    - name: 6. Mutation Test & Quality Gate (Infection)
+    - name: 6. Mutation Test & Quality Gate (Infection de Todo el Dominio)
       if: success()
       env:
         XDEBUG_MODE: coverage 
-      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi      
+      # 💡 Optimizado según literatura: MSI mínimo del 80% (Estándar de calidad riguroso en producción)
+      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=80 --min-covered-msi=90 --show-mutations --ansi      
+
     - name: 7. Generar Resumen de Calidad en Fallos y Éxitos
       if: always()
       run: |
@@ -87,7 +86,7 @@ jobs:
           ERRORS=$(grep -oP 'errors="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
           
           if [ "$FAILURES" -eq "0" ] && [ "$ERRORS" -eq "0" ]; then
-            echo "✅ **PHPUnit:** ¡Todos los tests pasaron exitosamente! ($TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
+            echo "✅ **PHPUnit:** ¡Todos los tests de dominio pasaron exitosamente! ($TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ **PHPUnit:** Se encontraron fallos en las pruebas. ($FAILURES fallos, $ERRORS errores de $TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
           fi
@@ -99,7 +98,6 @@ jobs:
 
         # 2. Analizar Behat (BDD)
         if [ -f "build/behat-output.txt" ]; then
-          # Extraemos las líneas de resumen usando expresiones regulares sencillas
           BEHAT_SCENARIOS=$(grep -E '[0-9]+ scenario' build/behat-output.txt | tail -n 1 || echo "")
           BEHAT_STEPS=$(grep -E '[0-9]+ step' build/behat-output.txt | tail -n 1 || echo "")
           
