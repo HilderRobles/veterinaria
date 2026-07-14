@@ -21,7 +21,6 @@ jobs:
   quality-pipeline:
     runs-on: ubuntu-latest
     
-    # 🔐 REQUISITO SWEBOK: Permite al pipeline hacer commit y push del archivo JSON de auditoría
     permissions:
       contents: write
     
@@ -29,7 +28,6 @@ jobs:
     - name: Checkout del código
       uses: actions/checkout@v4
       with:
-        # Trae todo el historial de commits necesario para el push de auditoría
         fetch-depth: 0
 
     - name: Configurar PHP 8.5 con Xdebug
@@ -52,18 +50,17 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: 1. Lint (Sintaxis de todos los módulos)
-      run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" || true
+      # 💡 Sin "|| true" para que un error sintáctico rompa el flujo de inmediato
+      run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected"
 
     - name: 2. Ejecutar Unit Tests (Completo)
       run: php vendor/bin/phpunit --testsuite "Domain Tests"
 
-    # - name: 3. Ejecutar Integration Tests (Opcional - Descomentar si usas BDD/Infraestructura)
-    #   run: php vendor/bin/phpunit --testsuite "Integration Tests"
-
     - name: 4. Ejecutar Pruebas de Comportamiento (Behat)
       run: |
+        # 💡 "set -o pipefail" asegura que si Behat falla, el pipeline se detenga y bloquee el merge
+        set -o pipefail
         mkdir -p build
-        # 💡 Corregido con 'php' para evitar fallos de permisos locales en Linux
         php vendor/bin/behat --format=pretty | tee build/behat-output.txt
       
     - name: 5. Generar Reporte de Cobertura XML (De todos los Domain Tests para Infection)
@@ -77,17 +74,12 @@ jobs:
       if: success()
       env:
         XDEBUG_MODE: coverage 
-      # Configurado con un MSI mínimo riguroso del 80% acorde a la literatura de testing
       run: php vendor/bin/infection --coverage=build --threads=max --min-msi=80 --min-covered-msi=90 --show-mutations --ansi      
 
     # =========================================================================
     # SWEBOK v4.0a - CONFIGURATION STATUS ACCOUNTING (CONTABILIDAD DE ESTADO)
     # =========================================================================
-# =========================================================================
-    # SWEBOK v4.0a - CONFIGURATION STATUS ACCOUNTING (CONTABILIDAD DE ESTADO)
-    # =========================================================================
     - name: 8. Registro de Contabilidad de Estado (Auditoría SCM)
-      # 💡 CAMBIO: Ahora corre en cualquier rama secundaria (feature/*) si todo sale bien
       if: success() && github.ref != 'refs/heads/main'
       run: |
         echo "Generando registro de estado de configuración según SWEBOK v4.0a..."
@@ -123,6 +115,84 @@ jobs:
           echo "La auditoría está al día. No se requieren cambios."
         else
           git commit -m "docs(scm): actualizar scm-status-report.json [SWEBOK Compliance] [skip ci]"
-          # 💡 CAMBIO: Hace push a la rama actual (p. ej. feature/mi-rama) de forma segura
           git push origin HEAD:${{ github.ref }}
         fi
+
+    # =========================================================================
+    # GENERAR REPORTES FINALES (SIEMPRE AL FINAL DEL WORKFLOW)
+    # =========================================================================
+    - name: 7. Generar Resumen de Calidad en Fallos y Éxitos
+      if: always()
+      run: |
+        echo "### 📊 Resumen de la Ejecución de Calidad" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # 1. Analizar PHPUnit
+        if [ -f "build/phpunit.junit.xml" ]; then
+          TESTS_RUN=$(grep -oP 'tests="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
+          FAILURES=$(grep -oP 'failures="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
+          ERRORS=$(grep -oP 'errors="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
+          
+          if [ "$FAILURES" -eq "0" ] && [ "$ERRORS" -eq "0" ]; then
+            echo "✅ **PHPUnit:** ¡Todos los tests de dominio pasaron exitosamente! ($TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **PHPUnit:** Se encontraron fallos en las pruebas. ($FAILURES fallos, $ERRORS errores de $TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
+          fi
+        else
+          echo "⚠️ **PHPUnit:** No se pudo leer el reporte de pruebas JUnit." >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # 2. Analizar Behat (BDD)
+        if [ -f "build/behat-output.txt" ]; then
+          BEHAT_SCENARIOS=$(grep -E '[0-9]+ scenario' build/behat-output.txt | tail -n 1 || echo "")
+          BEHAT_STEPS=$(grep -E '[0-9]+ step' build/behat-output.txt | tail -n 1 || echo "")
+          
+          if echo "$BEHAT_SCENARIOS" | grep -q "failed"; then
+            echo "❌ **Behat (BDD):** ¡Se encontraron escenarios fallidos!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **Behat (BDD):** ¡Todos los escenarios de comportamiento pasaron!" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          [ ! -z "$BEHAT_SCENARIOS" ] && echo "- **Escenarios:** $BEHAT_SCENARIOS" >> $GITHUB_STEP_SUMMARY
+          [ ! -z "$BEHAT_STEPS" ] && echo "- **Pasos:** $BEHAT_STEPS" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ **Behat:** No se generó el reporte de comportamiento de Behat." >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # 3. Analizar Log de Mutation Testing (Infection)
+        if [ -f "infection-log.txt" ]; then
+          MSI=$(grep -oP 'Mutation Score Indicator \(MSI\): \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
+          MUTANTS=$(grep -oP 'Total: \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
+          KILLED=$(grep -oP 'Killed: \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
+          
+          echo "🧬 **Infection Mutation:** Score MSI obtenido: $MSI% (Mutantes totales: $MUTANTS, Eliminados: $KILLED)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ **Infection:** No se ejecutó o no se generó el log de mutación." >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "---" >> $GITHUB_STEP_SUMMARY
+
+        # 4. Auditoría de Estado SWEBOK v4.0a
+        echo "### 📜 Cumplimiento SWEBOK v4.0a (Software Configuration Management)" >> $GITHUB_STEP_SUMMARY
+        if [ -f "scm-status-report.json" ]; then
+          echo "🛡️ **Estado:** ¡Auditado y Registrado exitosamente en la contabilidad de la SCM!" >> $GITHUB_STEP_SUMMARY
+          echo "- **Normativa:** *Configuration Status Accounting (Sec. 2.3)*" >> $GITHUB_STEP_SUMMARY
+          echo "- **Entregable:** \`scm-status-report.json\` actualizado en la rama secundaria." >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ **Estado:** No se registró la auditoría SWEBOK (este paso se omite si el pipeline o las pruebas fallaron)." >> $GITHUB_STEP_SUMMARY
+        fi
+
+    - name: Subir Reporte de Mutación como Artefacto
+      if: always() 
+      uses: actions/upload-artifact@v4
+      with:
+        name: reporte-mutacion-global
+        path: |
+          build/
+          infection-log.txt
+        retention-days: 5
