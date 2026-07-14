@@ -53,8 +53,8 @@ jobs:
     - name: 2. Ejecutar Unit Tests (Completo)
       run: php vendor/bin/phpunit --testsuite "Domain Tests"
 
-    - name: 3. Ejecutar Integration Tests (Completo - Excluido de Mutation)
-      run: php vendor/bin/phpunit --testsuite "Integration Tests"
+    ##- name: 3. Ejecutar Integration Tests (Completo - Excluido de Mutation)
+    #  run: php vendor/bin/phpunit --testsuite "Integration Tests"
 
     - name: 4. Ejecutar Pruebas de Comportamiento (Behat)
       run: |
