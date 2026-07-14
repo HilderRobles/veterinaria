@@ -1,4 +1,4 @@
-name: Hito 1 - Pipeline de Calidad CI/CD (Multi-Módulo)
+name: Pipeline de Calidad CI/CD (Multi-Módulo)
 
 on:
   push:
@@ -21,9 +21,16 @@ jobs:
   quality-pipeline:
     runs-on: ubuntu-latest
     
+    # 🔐 REQUISITO SWEBOK: Permite al pipeline hacer commit y push del archivo JSON de auditoría
+    permissions:
+      contents: write
+    
     steps:
     - name: Checkout del código
       uses: actions/checkout@v4
+      with:
+        # Trae todo el historial de commits necesario para el push de auditoría
+        fetch-depth: 0
 
     - name: Configurar PHP 8.5 con Xdebug
       uses: shivammathur/setup-php@v2
@@ -56,7 +63,7 @@ jobs:
     - name: 4. Ejecutar Pruebas de Comportamiento (Behat)
       run: |
         mkdir -p build
-        # 💡 Corregido: Usamos 'php' antes del binario para solucionar el "Permission denied" de Linux
+        # 💡 Corregido con 'php' para evitar fallos de permisos locales en Linux
         php vendor/bin/behat --format=pretty | tee build/behat-output.txt
       
     - name: 5. Generar Reporte de Cobertura XML (De todos los Domain Tests para Infection)
@@ -70,7 +77,7 @@ jobs:
       if: success()
       env:
         XDEBUG_MODE: coverage 
-      # 💡 Optimizado según literatura: MSI mínimo del 80% (Estándar de calidad riguroso en producción)
+      # Configurado con un MSI mínimo riguroso del 80% acorde a la literatura de testing
       run: php vendor/bin/infection --coverage=build --threads=max --min-msi=80 --min-covered-msi=90 --show-mutations --ansi      
 
     - name: 7. Generar Resumen de Calidad en Fallos y Éxitos
@@ -135,3 +142,50 @@ jobs:
           build/
           infection-log.txt
         retention-days: 5
+
+    # =========================================================================
+    # SWEBOK v4.0a - CONFIGURATION STATUS ACCOUNTING (CONTABILIDAD DE ESTADO)
+    # =========================================================================
+    - name: 8. Registro de Contabilidad de Estado (Auditoría SCM)
+      # Se ejecuta si todos los pasos previos fueron exitosos Y estamos en la rama principal 'main'
+      if: success() && github.ref == 'refs/heads/main'
+      run: |
+        echo "Generando registro de estado de configuración según SWEBOK v4.0a..."
+        
+        # Generamos un JSON formal con los datos del push/merge integrados en main
+        jq -n \
+          --arg commit "${{ github.sha }}" \
+          --arg autor "${{ github.actor }}" \
+          --arg fecha "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+          --arg ref "${{ github.ref }}" \
+          --arg run_id "${{ github.run_id }}" \
+          --arg run_num "${{ github.run_number }}" \
+          '{
+            "disciplina": "Configuration Status Accounting (SWEBOK v4.0a - Sec. 2.3)",
+            "registro_auditoria": {
+              "timestamp_utc": $fecha,
+              "commit_sha": $commit,
+              "autor": $autor,
+              "origen_ref": $ref,
+              "github_workflow": {
+                "run_id": $run_id,
+                "run_number": $run_num,
+                "estado": "VERIFICADO_Y_EXITOSO"
+              }
+            }
+          }' > scm-status-report.json
+
+        # Configurar Git local en el Runner de GitHub Actions
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        # Registrar el archivo de reporte generado en el repositorio
+        git add scm-status-report.json
+        
+        # Hacer commit y push únicamente si hay cambios para evitar fallos de ejecución vacíos
+        if git diff --quiet && git diff --staged --quiet; then
+          echo "La auditoría está al día. No se requieren cambios."
+        else
+          git commit -m "docs(scm): actualizar scm-status-report.json [SWEBOK Compliance] [skip ci]"
+          git push origin main
+        fi
