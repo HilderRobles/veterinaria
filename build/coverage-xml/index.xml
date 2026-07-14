@@ -1,252 +1,106 @@
 <?xml version="1.0"?>
 <phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
-  <build time="Wed Jun 3 17:42:19 UTC 2026" phpunit="10.5.63" coverage="10.1.16">
-    <runtime name="PHP" version="8.5.6" url="https://www.php.net/"/>
-    <driver name="xdebug" version="3.5.1"/>
+  <build time="Wed Jul 8 1:17:19 UTC 2026" phpunit="10.5.64" coverage="10.1.16">
+    <runtime name="PHP" version="8.5.8" url="https://www.php.net/"/>
+    <driver name="pcov" version="1.0.12"/>
   </build>
-  <project source="C:\wamp64\www\Nueva carpeta\veterinaria\src\Cliente">
+  <project source="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio">
     <tests>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_debe_permitir_asignar_un_id_valido_en_el_constructor" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_debe_promover_a_veterinario_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_mapear_a_arreglo_debe_retornar_id_nulo_si_no_tiene_id" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_no_debe_permitir_un_nombre_vacio" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_debe_promover_a_administrador_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_no_debe_permitir_un_rol_invalido" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_debe_crear_un_cliente_con_valores_correctos_y_rol_por_defecto" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ClienteTest::test_debe_mapear_el_cliente_a_un_arreglo_plano_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\CorreoElectronicoTest::test_debe_crear_correo_valido_y_normalizarlo" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\CorreoElectronicoTest::test_debe_lanzar_excepcion_si_el_formato_es_invalido" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_crear_telefono_valido" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_fallar_si_tiene_letras" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_retornar_false_si_los_telefonos_son_distintos" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_fallar_si_no_tiene_nueve_digitos" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_retornar_true_si_los_telefonos_tienen_el_mismo_numero" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_fallar_si_no_empieza_con_9" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\TelefonoTest::testDeberiaLimpiarEspaciosEnBlancoAccidentales" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\AutenticarClienteTest::test_debe_lanzar_excepcion_si_la_contrasena_es_incorrecta" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\AutenticarClienteTest::test_debe_autenticar_exitosamente_y_retornar_arreglo" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\AutenticarClienteTest::test_debe_lanzar_excepcion_si_el_usuario_no_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ListarClienteTest::test_debe_transformar_las_entidades_de_dominio_en_un_arreglo_plano_valido" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ListarClienteTest::test_debe_retornar_un_arreglo_vacio_cuando_no_hay_clientes" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ModificarPerfilClienteTest::test_debe_notificar_por_email_si_cambia_el_telefono" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ModificarPerfilClienteTest::test_debe_actualizar_solo_nombre_sin_disparar_alertas_cruzadas" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ModificarPerfilClienteTest::test_debe_notificar_por_sms_si_cambia_el_correo_y_no_esta_duplicado" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ModificarPerfilClienteTest::test_debe_lanzar_excepcion_si_usuario_no_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ModificarPerfilClienteTest::test_debe_fallar_si_el_nuevo_correo_ya_esta_duplicado_en_otro_usuario" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\ModificarPerfilClienteTest::test_no_deberia_buscar_correo_duplicado_si_el_correo_es_nulo" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_registrar_cliente_exitosamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\RegistrarClienteTest::test_debe_fallar_si_el_correo_ya_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\SolicitarRecuperacionContrasenaTest::test_debe_terminar_silenciosamente_si_el_usuario_no_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\SolicitarRecuperacionContrasenaTest::test_debe_enviar_correo_si_el_usuario_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\EliminarClienteTest::test_debe_fallar_al_eliminar_si_no_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\EliminarClienteTest::test_debe_eliminar_exitosamente_si_existe" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\PeticionesTest::test_debe_construir_modificar_perfil_cliente_peticion_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\PeticionesTest::test_debe_construir_registrar_cliente_peticion_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\PeticionesTest::test_debe_construir_recuperar_contrasena_peticion_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Aplicacion\PeticionesTest::test_debe_construir_autenticar_cliente_peticion_correctamente" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\ClienteIdTest::test_debe_crear_id_valido" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\ClienteIdTest::test_debe_lanzar_excepcion_si_el_id_es_cero" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\ClienteIdTest::test_debe_lanzar_excepcion_si_el_id_es_negativo" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\ContrasenaTest::test_debe_fallar_si_el_hash_de_la_contrasena_esta_vacio" size="unknown" status="success"/>
-      <test name="Tests\Cliente\Dominio\ObjetoValor\ContrasenaTest::test_debe_crear_contrasena_valida_y_permitir_verificarla" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_debe_permitir_asignar_un_id_valido_en_el_constructor" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_no_debe_permitir_un_rol_invalido" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_debe_promover_a_administrador_correctamente" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_debe_mapear_el_cliente_a_un_arreglo_plano_correctamente" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_mapear_a_arreglo_debe_retornar_id_nulo_si_no_tiene_id" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_debe_crear_un_cliente_con_valores_correctos_y_rol_por_defecto" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_no_debe_permitir_un_nombre_vacio" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ClienteTest::test_debe_promover_a_veterinario_correctamente" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\ClienteIdTest::test_debe_crear_id_valido" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\ClienteIdTest::test_debe_lanzar_excepcion_si_el_id_es_cero" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\ClienteIdTest::test_debe_lanzar_excepcion_si_el_id_es_negativo" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\ContrasenaTest::test_debe_fallar_si_el_hash_de_la_contrasena_esta_vacio" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\ContrasenaTest::test_debe_crear_contrasena_valida_y_permitir_verificarla" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\CorreoElectronicoTest::test_debe_crear_correo_valido_y_normalizarlo" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\CorreoElectronicoTest::test_debe_lanzar_excepcion_si_el_formato_es_invalido" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\CorreoElectronicoTest::testDeberiaDetectarSiSonDiferentes" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_crear_telefono_valido" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_fallar_si_tiene_letras" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_fallar_si_no_empieza_con_9" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_fallar_si_no_tiene_nueve_digitos" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_retornar_true_si_los_telefonos_tienen_el_mismo_numero" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::test_debe_retornar_false_si_los_telefonos_son_distintos" size="unknown" status="success"/>
+      <test name="Test\Cliente\Dominio\ObjetoValor\TelefonoTest::testDeberiaLimpiarEspaciosEnBlancoAccidentales" size="unknown" status="success"/>
     </tests>
     <directory name="/">
       <totals>
-        <lines total="431" comments="21" code="410" executable="111" executed="111" percent="100.00"/>
-        <methods count="37" tested="37" percent="100.00"/>
+        <lines total="188" comments="15" code="173" executable="46" executed="46" percent="100.00"/>
+        <methods count="22" tested="22" percent="100.00"/>
         <functions count="0" tested="0" percent="0"/>
-        <classes count="15" tested="15" percent="100.00"/>
+        <classes count="5" tested="5" percent="100.00"/>
         <traits count="0" tested="0" percent="0"/>
       </totals>
-      <directory name="Aplicacion">
+      <directory name="ObjetoValor">
         <totals>
-          <lines total="250" comments="5" code="245" executable="66" executed="66" percent="100.00"/>
-          <methods count="16" tested="16" percent="100.00"/>
+          <lines total="98" comments="11" code="87" executable="19" executed="19" percent="100.00"/>
+          <methods count="11" tested="11" percent="100.00"/>
           <functions count="0" tested="0" percent="0"/>
-          <classes count="10" tested="10" percent="100.00"/>
+          <classes count="4" tested="4" percent="100.00"/>
           <traits count="0" tested="0" percent="0"/>
         </totals>
-        <file name="AutenticarCliente.php" href="Aplicacion/AutenticarCliente.php.xml">
+        <file name="ClienteId.php" href="ObjetoValor/ClienteId.php.xml">
           <totals>
-            <lines total="23" comments="0" code="23" executable="6" executed="6" percent="100.00"/>
+            <lines total="15" comments="0" code="15" executable="3" executed="3" percent="100.00"/>
             <methods count="2" tested="2" percent="100.00"/>
             <functions count="0" tested="0" percent="0"/>
             <classes count="1" tested="1" percent="100.00"/>
             <traits count="0" tested="0" percent="0"/>
           </totals>
         </file>
-        <file name="AutenticarClientePeticion.php" href="Aplicacion/AutenticarClientePeticion.php.xml">
+        <file name="Contrasena.php" href="ObjetoValor/Contrasena.php.xml">
           <totals>
-            <lines total="10" comments="0" code="10" executable="1" executed="1" percent="100.00"/>
-            <methods count="1" tested="1" percent="100.00"/>
+            <lines total="19" comments="0" code="19" executable="4" executed="4" percent="100.00"/>
+            <methods count="3" tested="3" percent="100.00"/>
             <functions count="0" tested="0" percent="0"/>
             <classes count="1" tested="1" percent="100.00"/>
             <traits count="0" tested="0" percent="0"/>
           </totals>
         </file>
-        <file name="CifradorContrasena.php" href="Aplicacion/CifradorContrasena.php.xml">
+        <file name="CorreoElectronico.php" href="ObjetoValor/CorreoElectronico.php.xml">
           <totals>
-            <lines total="9" comments="0" code="9" executable="0" executed="0" percent="0"/>
-            <methods count="0" tested="0" percent="0"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="0" tested="0" percent="0"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="EliminarCliente.php" href="Aplicacion/EliminarCliente.php.xml">
-          <totals>
-            <lines total="24" comments="1" code="23" executable="6" executed="6" percent="100.00"/>
-            <methods count="2" tested="2" percent="100.00"/>
+            <lines total="30" comments="1" code="29" executable="6" executed="6" percent="100.00"/>
+            <methods count="3" tested="3" percent="100.00"/>
             <functions count="0" tested="0" percent="0"/>
             <classes count="1" tested="1" percent="100.00"/>
             <traits count="0" tested="0" percent="0"/>
           </totals>
         </file>
-        <file name="EnviadorNotificaciones.php" href="Aplicacion/EnviadorNotificaciones.php.xml">
+        <file name="Telefono.php" href="ObjetoValor/Telefono.php.xml">
           <totals>
-            <lines total="12" comments="0" code="12" executable="0" executed="0" percent="0"/>
-            <methods count="0" tested="0" percent="0"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="0" tested="0" percent="0"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="ListarCliente.php" href="Aplicacion/ListarCliente.php.xml">
-          <totals>
-            <lines total="29" comments="1" code="28" executable="11" executed="11" percent="100.00"/>
-            <methods count="2" tested="2" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="ModificarPerfilCliente.php" href="Aplicacion/ModificarPerfilCliente.php.xml">
-          <totals>
-            <lines total="56" comments="3" code="53" executable="24" executed="24" percent="100.00"/>
-            <methods count="2" tested="2" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="ModificarPerfilClientePeticion.php" href="Aplicacion/ModificarPerfilClientePeticion.php.xml">
-          <totals>
-            <lines total="12" comments="0" code="12" executable="1" executed="1" percent="100.00"/>
-            <methods count="1" tested="1" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="RecuperarContrasenaPeticion.php" href="Aplicacion/RecuperarContrasenaPeticion.php.xml">
-          <totals>
-            <lines total="9" comments="0" code="9" executable="1" executed="1" percent="100.00"/>
-            <methods count="1" tested="1" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="RegistrarCliente.php" href="Aplicacion/RegistrarCliente.php.xml">
-          <totals>
-            <lines total="29" comments="0" code="29" executable="8" executed="8" percent="100.00"/>
-            <methods count="2" tested="2" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="RegistrarClientePeticion.php" href="Aplicacion/RegistrarClientePeticion.php.xml">
-          <totals>
-            <lines total="12" comments="0" code="12" executable="1" executed="1" percent="100.00"/>
-            <methods count="1" tested="1" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="SolicitarRecuperacionContrasena.php" href="Aplicacion/SolicitarRecuperacionContrasena.php.xml">
-          <totals>
-            <lines total="25" comments="0" code="25" executable="7" executed="7" percent="100.00"/>
-            <methods count="2" tested="2" percent="100.00"/>
+            <lines total="34" comments="10" code="24" executable="6" executed="6" percent="100.00"/>
+            <methods count="3" tested="3" percent="100.00"/>
             <functions count="0" tested="0" percent="0"/>
             <classes count="1" tested="1" percent="100.00"/>
             <traits count="0" tested="0" percent="0"/>
           </totals>
         </file>
       </directory>
-      <directory name="Dominio">
+      <file name="Cliente.php" href="Cliente.php.xml">
         <totals>
-          <lines total="181" comments="16" code="165" executable="45" executed="45" percent="100.00"/>
-          <methods count="21" tested="21" percent="100.00"/>
+          <lines total="72" comments="2" code="70" executable="27" executed="27" percent="100.00"/>
+          <methods count="11" tested="11" percent="100.00"/>
           <functions count="0" tested="0" percent="0"/>
-          <classes count="5" tested="5" percent="100.00"/>
+          <classes count="1" tested="1" percent="100.00"/>
           <traits count="0" tested="0" percent="0"/>
         </totals>
-        <directory name="ObjetoValor">
-          <totals>
-            <lines total="91" comments="12" code="79" executable="18" executed="18" percent="100.00"/>
-            <methods count="10" tested="10" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="4" tested="4" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-          <file name="ClienteId.php" href="Dominio/ObjetoValor/ClienteId.php.xml">
-            <totals>
-              <lines total="15" comments="0" code="15" executable="3" executed="3" percent="100.00"/>
-              <methods count="2" tested="2" percent="100.00"/>
-              <functions count="0" tested="0" percent="0"/>
-              <classes count="1" tested="1" percent="100.00"/>
-              <traits count="0" tested="0" percent="0"/>
-            </totals>
-          </file>
-          <file name="Contrasena.php" href="Dominio/ObjetoValor/Contrasena.php.xml">
-            <totals>
-              <lines total="19" comments="0" code="19" executable="4" executed="4" percent="100.00"/>
-              <methods count="3" tested="3" percent="100.00"/>
-              <functions count="0" tested="0" percent="0"/>
-              <classes count="1" tested="1" percent="100.00"/>
-              <traits count="0" tested="0" percent="0"/>
-            </totals>
-          </file>
-          <file name="CorreoElectronico.php" href="Dominio/ObjetoValor/CorreoElectronico.php.xml">
-            <totals>
-              <lines total="23" comments="2" code="21" executable="5" executed="5" percent="100.00"/>
-              <methods count="2" tested="2" percent="100.00"/>
-              <functions count="0" tested="0" percent="0"/>
-              <classes count="1" tested="1" percent="100.00"/>
-              <traits count="0" tested="0" percent="0"/>
-            </totals>
-          </file>
-          <file name="Telefono.php" href="Dominio/ObjetoValor/Telefono.php.xml">
-            <totals>
-              <lines total="34" comments="10" code="24" executable="6" executed="6" percent="100.00"/>
-              <methods count="3" tested="3" percent="100.00"/>
-              <functions count="0" tested="0" percent="0"/>
-              <classes count="1" tested="1" percent="100.00"/>
-              <traits count="0" tested="0" percent="0"/>
-            </totals>
-          </file>
-        </directory>
-        <file name="Cliente.php" href="Dominio/Cliente.php.xml">
-          <totals>
-            <lines total="72" comments="2" code="70" executable="27" executed="27" percent="100.00"/>
-            <methods count="11" tested="11" percent="100.00"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="1" tested="1" percent="100.00"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-        <file name="RepositorioCliente.php" href="Dominio/RepositorioCliente.php.xml">
-          <totals>
-            <lines total="18" comments="2" code="16" executable="0" executed="0" percent="0"/>
-            <methods count="0" tested="0" percent="0"/>
-            <functions count="0" tested="0" percent="0"/>
-            <classes count="0" tested="0" percent="0"/>
-            <traits count="0" tested="0" percent="0"/>
-          </totals>
-        </file>
-      </directory>
+      </file>
+      <file name="RepositorioCliente.php" href="RepositorioCliente.php.xml">
+        <totals>
+          <lines total="18" comments="2" code="16" executable="0" executed="0" percent="0"/>
+          <methods count="0" tested="0" percent="0"/>
+          <functions count="0" tested="0" percent="0"/>
+          <classes count="0" tested="0" percent="0"/>
+          <traits count="0" tested="0" percent="0"/>
+        </totals>
+      </file>
     </directory>
   </project>
 </phpunit>

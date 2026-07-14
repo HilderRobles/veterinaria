@@ -12,6 +12,7 @@ return array(
     '8825ede83f2f289127722d4e842cf7e8' => $vendorDir . '/symfony/polyfill-intl-grapheme/bootstrap.php',
     'e69f7f6ee287b969198c3c9d6777bd38' => $vendorDir . '/symfony/polyfill-intl-normalizer/bootstrap.php',
     'de0aa6f7ee0c8e5d0c93ac8ecaf08e3e' => $vendorDir . '/sanmai/pipeline/src/functions.php',
+    'deecf9d6b2672fb73429f9b28fdee35f' => $vendorDir . '/symfony/polyfill-deepclone/bootstrap.php',
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     '7aed44d824e149ce152c0fb82af9379a' => $vendorDir . '/colinodell/json5/src/global.php',
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -99,5 +100,7 @@ return array(
     '4af1dca6db8c527c6eed27bff85ff0e5' => $vendorDir . '/thecodingmachine/safe/generated/yaz.php',
     'fe43ca06499ac37bc2dedd823af71eb5' => $vendorDir . '/thecodingmachine/safe/generated/zip.php',
     '356736db98a6834f0a886b8d509b0ecd' => $vendorDir . '/thecodingmachine/safe/generated/zlib.php',
+    'c72349b1fe8d0deeedd3a52e8aa814d8' => $vendorDir . '/mockery/mockery/library/helpers.php',
+    'ce9671a430e4846b44e1c68c7611f9f5' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
 );

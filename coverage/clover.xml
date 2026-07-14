@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1783473064">
+  <project timestamp="1783473064">
+    <file name="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio\Cliente.php">
+      <class name="App\Cliente\Dominio\Cliente" namespace="global">
+        <metrics complexity="14" methods="11" coveredmethods="11" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="27" elements="38" coveredelements="38"/>
+      </class>
+      <line num="18" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="8"/>
+      <line num="26" type="stmt" count="8"/>
+      <line num="27" type="stmt" count="1"/>
+      <line num="30" type="stmt" count="7"/>
+      <line num="31" type="stmt" count="7"/>
+      <line num="32" type="stmt" count="7"/>
+      <line num="33" type="stmt" count="7"/>
+      <line num="34" type="stmt" count="7"/>
+      <line num="35" type="stmt" count="7"/>
+      <line num="39" type="method" name="promoverAVeterinario" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="40" type="stmt" count="1"/>
+      <line num="43" type="method" name="promoverAAdministrador" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="44" type="stmt" count="1"/>
+      <line num="47" type="method" name="establecerRol" visibility="private" complexity="2" crap="2" count="7"/>
+      <line num="48" type="stmt" count="7"/>
+      <line num="49" type="stmt" count="7"/>
+      <line num="50" type="stmt" count="1"/>
+      <line num="52" type="stmt" count="6"/>
+      <line num="56" type="method" name="obtenerId" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="57" type="method" name="obtenerNombre" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="58" type="method" name="obtenerCorreoElectronico" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="59" type="method" name="obtenerTelefono" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="60" type="method" name="obtenerContrasena" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="61" type="method" name="obtenerRol" visibility="public" complexity="1" crap="1" count="3"/>
+      <line num="63" type="method" name="mapearAArreglo" visibility="public" complexity="2" crap="2" count="2"/>
+      <line num="64" type="stmt" count="2"/>
+      <line num="65" type="stmt" count="2"/>
+      <line num="66" type="stmt" count="2"/>
+      <line num="67" type="stmt" count="2"/>
+      <line num="68" type="stmt" count="2"/>
+      <line num="69" type="stmt" count="2"/>
+      <line num="70" type="stmt" count="2"/>
+      <metrics loc="72" ncloc="70" classes="1" methods="11" coveredmethods="11" conditionals="0" coveredconditionals="0" statements="27" coveredstatements="27" elements="38" coveredelements="38"/>
+    </file>
+    <file name="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio\ObjetoValor\ClienteId.php">
+      <class name="App\Cliente\Dominio\ObjetoValor\ClienteId" namespace="global">
+        <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+      </class>
+      <line num="6" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="3"/>
+      <line num="7" type="stmt" count="3"/>
+      <line num="8" type="stmt" count="2"/>
+      <line num="12" type="method" name="valor" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="13" type="stmt" count="1"/>
+      <metrics loc="15" ncloc="15" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+    </file>
+    <file name="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio\ObjetoValor\Contrasena.php">
+      <class name="App\Cliente\Dominio\ObjetoValor\Contrasena" namespace="global">
+        <metrics complexity="4" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="7" coveredelements="7"/>
+      </class>
+      <line num="6" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="2"/>
+      <line num="7" type="stmt" count="2"/>
+      <line num="8" type="stmt" count="1"/>
+      <line num="12" type="method" name="valor" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="13" type="stmt" count="1"/>
+      <line num="16" type="method" name="verificar" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="17" type="stmt" count="1"/>
+      <metrics loc="19" ncloc="19" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="4" elements="7" coveredelements="7"/>
+    </file>
+    <file name="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio\ObjetoValor\CorreoElectronico.php">
+      <class name="App\Cliente\Dominio\ObjetoValor\CorreoElectronico" namespace="global">
+        <metrics complexity="4" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="9" coveredelements="9"/>
+      </class>
+      <line num="9" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="3"/>
+      <line num="12" type="stmt" count="3"/>
+      <line num="14" type="stmt" count="3"/>
+      <line num="15" type="stmt" count="1"/>
+      <line num="18" type="stmt" count="2"/>
+      <line num="21" type="method" name="valor" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="23" type="stmt" count="2"/>
+      <line num="26" type="method" name="esIgualA" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="28" type="stmt" count="1"/>
+      <metrics loc="30" ncloc="29" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="9" coveredelements="9"/>
+    </file>
+    <file name="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio\ObjetoValor\Telefono.php">
+      <class name="App\Cliente\Dominio\ObjetoValor\Telefono" namespace="global">
+        <metrics complexity="4" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="9" coveredelements="9"/>
+      </class>
+      <line num="11" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="7"/>
+      <line num="13" type="stmt" count="7"/>
+      <line num="17" type="stmt" count="7"/>
+      <line num="18" type="stmt" count="3"/>
+      <line num="21" type="stmt" count="4"/>
+      <line num="24" type="method" name="valor" visibility="public" complexity="1" crap="1" count="4"/>
+      <line num="25" type="stmt" count="4"/>
+      <line num="31" type="method" name="esIgualA" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="32" type="stmt" count="2"/>
+      <metrics loc="34" ncloc="24" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="9" coveredelements="9"/>
+    </file>
+    <file name="C:\Users\estudiante\Desktop\proyecto\veterinaria\src\Cliente\Dominio\RepositorioCliente.php">
+      <metrics loc="18" ncloc="16" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <metrics files="6" loc="188" ncloc="173" classes="5" methods="22" coveredmethods="22" conditionals="0" coveredconditionals="0" statements="46" coveredstatements="46" elements="68" coveredelements="68"/>
+  </project>
+</coverage>

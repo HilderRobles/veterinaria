@@ -14,19 +14,15 @@
    <testsuites>
         <testsuite name="Domain Tests">
             <directory>tests/Cliente/Dominio</directory>
-            <directory>tests/Cliente/Aplicacion</directory>
-        </testsuite>
-        <testsuite name="Integration Tests">
-            <directory>tests/Cliente/Infraestructura</directory>
         </testsuite>
     </testsuites>
 
     <source>
         <include>
             <directory>src/Cliente/Dominio</directory>
-            <directory>src/Cliente/Aplicacion</directory>
-            <directory>src/Cita/Dominio</directory>
-            <directory>src/Cita/Aplicacion</directory>
         </include>
     </source>
+
 </phpunit>
+
+

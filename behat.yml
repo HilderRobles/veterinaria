@@ -1,5 +1,38 @@
 default:
   suites:
-    default:
-      contexts:
-        - FeatureContext
+    registrar_cliente:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/RegistrarCliente.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\RegistrarClienteContext
+    
+    autenticacion_cliente:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/AutenticarCliente.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\AutenticarClienteContext
+    
+    eliminar_cliente:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/EliminarCliente.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\EliminarClienteContext
+        
+    listar_clientes:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/ListarClientes.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\ListarClientesContext
+    
+    modificar_perfil:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/ModificarPerfilCliente.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\ModificarPerfilClienteContext
+        
+    solicitar_recuperacion_contrasena:
+      paths:    
+        - '%paths.base%/tests/Cliente/Aplicacion/SolicitarRecuperacionContrasena.feature'
+      contexts: 
+        - Test\Cliente\Aplicacion\SolicitarRecuperacionContrasenaContext
+      

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Cliente\Dominio\ObjetoValor;
+namespace Test\Cliente\Dominio\ObjetoValor;
 
 use App\Cliente\Dominio\ObjetoValor\ClienteId;
 use PHPUnit\Framework\Attributes\CoversClass;

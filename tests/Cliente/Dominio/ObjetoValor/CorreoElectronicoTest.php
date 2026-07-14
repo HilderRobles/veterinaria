@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Cliente\Dominio\ObjetoValor;
+namespace Test\Cliente\Dominio\ObjetoValor;
 
 use App\Cliente\Dominio\ObjetoValor\CorreoElectronico;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -18,5 +18,12 @@ class CorreoElectronicoTest extends TestCase {
         $this->expectExceptionMessage("El formato del correo electrónico no es válido.");
 
         new CorreoElectronico("correo-invalido.com");
+    }
+    public function testDeberiaDetectarSiSonDiferentes(): void
+    {
+        $correoA = new CorreoElectronico("gon@gmail.com");
+        $correoB = new CorreoElectronico("pedro@outlook.com");
+
+        $this->assertFalse($correoA->esIgualA($correoB));
     }
 }
