@@ -72,9 +72,8 @@ jobs:
     - name: 6. Mutation Test & Quality Gate (Infection)
       if: success()
       env:
-        XDEBUG_MODE: coverage
-      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi --filter="${{ env.INFECTION_FILTER }}"
-      
+        XDEBUG_MODE: coverage 
+      run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi      
     - name: 7. Generar Resumen de Calidad en Fallos y Éxitos
       if: always()
       run: |
