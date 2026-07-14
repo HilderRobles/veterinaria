@@ -80,79 +80,18 @@ jobs:
       # Configurado con un MSI mínimo riguroso del 80% acorde a la literatura de testing
       run: php vendor/bin/infection --coverage=build --threads=max --min-msi=80 --min-covered-msi=90 --show-mutations --ansi      
 
-    - name: 7. Generar Resumen de Calidad en Fallos y Éxitos
-      if: always()
-      run: |
-        echo "### 📊 Resumen de la Ejecución de Calidad" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        # 1. Analizar PHPUnit
-        if [ -f "build/phpunit.junit.xml" ]; then
-          TESTS_RUN=$(grep -oP 'tests="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
-          FAILURES=$(grep -oP 'failures="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
-          ERRORS=$(grep -oP 'errors="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
-          
-          if [ "$FAILURES" -eq "0" ] && [ "$ERRORS" -eq "0" ]; then
-            echo "✅ **PHPUnit:** ¡Todos los tests de dominio pasaron exitosamente! ($TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ **PHPUnit:** Se encontraron fallos en las pruebas. ($FAILURES fallos, $ERRORS errores de $TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
-          fi
-        else
-          echo "⚠️ **PHPUnit:** No se pudo leer el reporte de pruebas JUnit." >> $GITHUB_STEP_SUMMARY
-        fi
-
-        echo "" >> $GITHUB_STEP_SUMMARY
-
-        # 2. Analizar Behat (BDD)
-        if [ -f "build/behat-output.txt" ]; then
-          BEHAT_SCENARIOS=$(grep -E '[0-9]+ scenario' build/behat-output.txt | tail -n 1 || echo "")
-          BEHAT_STEPS=$(grep -E '[0-9]+ step' build/behat-output.txt | tail -n 1 || echo "")
-          
-          if echo "$BEHAT_SCENARIOS" | grep -q "failed"; then
-            echo "❌ **Behat (BDD):** ¡Se encontraron escenarios fallidos!" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "✅ **Behat (BDD):** ¡Todos los escenarios de comportamiento pasaron!" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          [ ! -z "$BEHAT_SCENARIOS" ] && echo "- **Escenarios:** $BEHAT_SCENARIOS" >> $GITHUB_STEP_SUMMARY
-          [ ! -z "$BEHAT_STEPS" ] && echo "- **Pasos:** $BEHAT_STEPS" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "⚠️ **Behat:** No se generó el reporte de comportamiento de Behat." >> $GITHUB_STEP_SUMMARY
-        fi
-
-        echo "" >> $GITHUB_STEP_SUMMARY
-
-        # 3. Analizar Log de Mutation Testing (Infection)
-        if [ -f "infection-log.txt" ]; then
-          MSI=$(grep -oP 'Mutation Score Indicator \(MSI\): \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
-          MUTANTS=$(grep -oP 'Total: \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
-          KILLED=$(grep -oP 'Killed: \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
-          
-          echo "🧬 **Infection Mutation:** Score MSI obtenido: $MSI% (Mutantes totales: $MUTANTS, Eliminados: $KILLED)" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "⚠️ **Infection:** No se ejecutó o no se generó el log de mutación." >> $GITHUB_STEP_SUMMARY
-        fi
-
-    - name: Subir Reporte de Mutación como Artefacto
-      if: always() 
-      uses: actions/upload-artifact@v4
-      with:
-        name: reporte-mutacion-global
-        path: |
-          build/
-          infection-log.txt
-        retention-days: 5
-
     # =========================================================================
     # SWEBOK v4.0a - CONFIGURATION STATUS ACCOUNTING (CONTABILIDAD DE ESTADO)
     # =========================================================================
+# =========================================================================
+    # SWEBOK v4.0a - CONFIGURATION STATUS ACCOUNTING (CONTABILIDAD DE ESTADO)
+    # =========================================================================
     - name: 8. Registro de Contabilidad de Estado (Auditoría SCM)
-      # Se ejecuta si todos los pasos previos fueron exitosos Y estamos en la rama principal 'main'
-      if: success() && github.ref == 'refs/heads/main'
+      # 💡 CAMBIO: Ahora corre en cualquier rama secundaria (feature/*) si todo sale bien
+      if: success() && github.ref != 'refs/heads/main'
       run: |
         echo "Generando registro de estado de configuración según SWEBOK v4.0a..."
         
-        # Generamos un JSON formal con los datos del push/merge integrados en main
         jq -n \
           --arg commit "${{ github.sha }}" \
           --arg autor "${{ github.actor }}" \
@@ -175,17 +114,15 @@ jobs:
             }
           }' > scm-status-report.json
 
-        # Configurar Git local en el Runner de GitHub Actions
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # Registrar el archivo de reporte generado en el repositorio
         git add scm-status-report.json
         
-        # Hacer commit y push únicamente si hay cambios para evitar fallos de ejecución vacíos
         if git diff --quiet && git diff --staged --quiet; then
           echo "La auditoría está al día. No se requieren cambios."
         else
           git commit -m "docs(scm): actualizar scm-status-report.json [SWEBOK Compliance] [skip ci]"
-          git push origin main
+          # 💡 CAMBIO: Hace push a la rama actual (p. ej. feature/mi-rama) de forma segura
+          git push origin HEAD:${{ github.ref }}
         fi
