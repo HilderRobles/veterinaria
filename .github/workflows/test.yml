@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'features/**' # 🎯 Detecta cambios también en tus archivos .feature de Behat
       - 'composer.json'
       - 'composer.lock'
       - '.github/workflows/**'
@@ -14,10 +15,10 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
+      - 'features/**'
 
 env:
-  TEST_FILTER: "Cliente"                            # 🎯 Módulo actual en PHPUnit
-  INFECTION_FILTER: "src/Cliente/Dominio,src/Cliente/Aplicacion" # 🎯 Módulo actual en Infection
+  INFECTION_FILTER: "src/Cliente/Dominio" # 🎯 Módulo actual a mutar en Infection
 
 jobs:
   quality-pipeline:
@@ -30,8 +31,8 @@ jobs:
     - name: Configurar PHP 8.5 con Xdebug
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.5' # 🟢 GitHub Actions buscará la versión estable de la rama 8.5 compatible con tu 8.5.6
-        coverage: xdebug   # 🟢 Sincronizado con tu entorno local para evitar discrepancias de cobertura
+        php-version: '8.5'
+        coverage: xdebug
         extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, xdebug
         
     - name: Cache de dependencias de Composer
@@ -49,26 +50,85 @@ jobs:
     - name: 1. Lint (Sintaxis de todos los módulos)
       run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" || true
 
-    - name: 2. Unit Tests (Filtrado)
-      run: php vendor/bin/phpunit --testsuite "Domain Tests" --filter "${{ env.TEST_FILTER }}"
+    - name: 2. Ejecutar Unit Tests (Completo)
+      run: php vendor/bin/phpunit --testsuite "Domain Tests"
 
-    #- name: 3. Integration Tests (Filtrado)
-    #  run: php vendor/bin/phpunit --testsuite "Integration Tests" --filter "${{ env.TEST_FILTER }}"
+    - name: 3. Ejecutar Integration Tests (Completo - Excluido de Mutation)
+      run: php vendor/bin/phpunit --testsuite "Integration Tests"
+
+    - name: 4. Ejecutar Pruebas de Comportamiento (Behat)
+      run: |
+        mkdir -p build
+        # Usamos 'tee' para ver la salida en tiempo real en la consola y guardarla en un archivo para el reporte
+        vendor/bin/behat --format=pretty | tee build/behat-output.txt
       
-    - name: 4. Generar Reporte de Cobertura XML con Xdebug
-      # Usamos la directiva de entorno para activar el modo cobertura de Xdebug en la terminal de Linux
+    - name: 5. Generar Reporte de Cobertura XML (Solo de Unit Tests para Infection)
       env:
         XDEBUG_MODE: coverage
       run: |
         mkdir -p build
-        php vendor/bin/phpunit --filter "${{ env.TEST_FILTER }}" --log-junit=build/phpunit.junit.xml --coverage-xml=build/coverage-xml
+        php vendor/bin/phpunit --testsuite "Domain Tests" --log-junit=build/phpunit.junit.xml --coverage-xml=build/coverage-xml
 
-    - name: 5. Mutation Test & Quality Gate (Infection)
+    - name: 6. Mutation Test & Quality Gate (Infection)
       if: success()
       env:
         XDEBUG_MODE: coverage
       run: php vendor/bin/infection --coverage=build --threads=max --min-msi=70 --min-covered-msi=90 --show-mutations --ansi --filter="${{ env.INFECTION_FILTER }}"
       
+    - name: 7. Generar Resumen de Calidad en Fallos y Éxitos
+      if: always()
+      run: |
+        echo "### 📊 Resumen de la Ejecución de Calidad" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # 1. Analizar PHPUnit
+        if [ -f "build/phpunit.junit.xml" ]; then
+          TESTS_RUN=$(grep -oP 'tests="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
+          FAILURES=$(grep -oP 'failures="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
+          ERRORS=$(grep -oP 'errors="\K[^" ]+' build/phpunit.junit.xml | head -n 1 || echo "0")
+          
+          if [ "$FAILURES" -eq "0" ] && [ "$ERRORS" -eq "0" ]; then
+            echo "✅ **PHPUnit:** ¡Todos los tests pasaron exitosamente! ($TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **PHPUnit:** Se encontraron fallos en las pruebas. ($FAILURES fallos, $ERRORS errores de $TESTS_RUN ejecutados)." >> $GITHUB_STEP_SUMMARY
+          fi
+        else
+          echo "⚠️ **PHPUnit:** No se pudo leer el reporte de pruebas JUnit." >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # 2. Analizar Behat (BDD)
+        if [ -f "build/behat-output.txt" ]; then
+          # Extraemos las líneas de resumen usando expresiones regulares sencillas
+          BEHAT_SCENARIOS=$(grep -E '[0-9]+ scenario' build/behat-output.txt | tail -n 1 || echo "")
+          BEHAT_STEPS=$(grep -E '[0-9]+ step' build/behat-output.txt | tail -n 1 || echo "")
+          
+          if echo "$BEHAT_SCENARIOS" | grep -q "failed"; then
+            echo "❌ **Behat (BDD):** ¡Se encontraron escenarios fallidos!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ **Behat (BDD):** ¡Todos los escenarios de comportamiento pasaron!" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          [ ! -z "$BEHAT_SCENARIOS" ] && echo "- **Escenarios:** $BEHAT_SCENARIOS" >> $GITHUB_STEP_SUMMARY
+          [ ! -z "$BEHAT_STEPS" ] && echo "- **Pasos:** $BEHAT_STEPS" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ **Behat:** No se generó el reporte de comportamiento de Behat." >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # 3. Analizar Log de Mutation Testing (Infection)
+        if [ -f "infection-log.txt" ]; then
+          MSI=$(grep -oP 'Mutation Score Indicator \(MSI\): \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
+          MUTANTS=$(grep -oP 'Total: \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
+          KILLED=$(grep -oP 'Killed: \K[0-9]+' infection-log.txt | head -n 1 || echo "N/A")
+          
+          echo "🧬 **Infection Mutation:** Score MSI obtenido: $MSI% (Mutantes totales: $MUTANTS, Eliminados: $KILLED)" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ **Infection:** No se ejecutó o no se generó el log de mutación." >> $GITHUB_STEP_SUMMARY
+        fi
+
     - name: Subir Reporte de Mutación como Artefacto
       if: always() 
       uses: actions/upload-artifact@v4
