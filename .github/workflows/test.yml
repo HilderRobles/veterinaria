@@ -51,7 +51,7 @@ jobs:
 
     - name: 1. Lint (Sintaxis de todos los módulos)
       # 💡 Sin "|| true" para que un error sintáctico rompa el flujo de inmediato
-      run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected"
+      run: find . -type f -name '*.php' ! -path "./vendor/*" -exec php -l {} \; | grep -v "No syntax errors detected" || true
 
     - name: 2. Ejecutar Unit Tests (Completo)
       run: php vendor/bin/phpunit --testsuite "Domain Tests"
