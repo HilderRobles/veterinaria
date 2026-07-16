@@ -35,6 +35,15 @@ if (strpos($path, '/api/clientes') === 0) {
     exit;
 }
 
+// 3. ENRUTADOR DE CITAS
+if (strpos($path, '/api/citas') === 0) {
+    header('Content-Type: application/json; charset=utf-8');
+    \App\Cita\Infraestructura\CitaRuta::despachar($method, $path, $input, $pdo);
+    exit;
+}
+
+
+
 // Si llega aquí, es porque no pertenece al módulo de clientes
 header('Content-Type: application/json; charset=utf-8');
 http_response_code(404);

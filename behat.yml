@@ -35,4 +35,16 @@ default:
         - '%paths.base%/tests/Cliente/Aplicacion/SolicitarRecuperacionContrasena.feature'
       contexts: 
         - Test\Cliente\Aplicacion\SolicitarRecuperacionContrasenaContext
+
+    agendar_cita:
+        paths:    
+          - '%paths.base%/tests/Cita/Aplicacion/AgendarCita.feature'
+        contexts: 
+          - Test\Cita\Aplicacion\AgendarCitaContext
+          
+    confirmar_cita:
+        paths:    
+          - '%paths.base%/tests/Cita/Aplicacion/ConfirmarCita.feature'
+        contexts: 
+          - Test\Cita\Aplicacion\ConfirmarCitaContext
       
