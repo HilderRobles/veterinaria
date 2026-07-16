@@ -1,13 +1,13 @@
 {
   "disciplina": "Configuration Status Accounting (SWEBOK v4.0a - Sec. 2.3)",
   "registro_auditoria": {
-    "timestamp_utc": "2026-07-15T00:40:39Z",
-    "commit_sha": "432ccb8341788f9e90a7a6929d9d51328f8bae65",
-    "autor": "HilderRobles",
-    "origen_ref": "refs/heads/feature/cliente",
+    "timestamp_utc": "2026-07-16T00:32:51Z",
+    "commit_sha": "b40c044adeb89db497d1719d4d828dacd70abb89",
+    "autor": "jtlaquec",
+    "origen_ref": "refs/heads/feature/modulo-citas",
     "github_workflow": {
-      "run_id": "29379663177",
-      "run_number": "31",
+      "run_id": "29461712275",
+      "run_number": "34",
       "estado": "VERIFICADO_Y_EXITOSO"
     }
   }
