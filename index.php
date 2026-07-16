@@ -26,6 +26,11 @@ if ($posicionApi !== false) {
 
 $input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
 
+if ($path === '/api/metrics' && $method === 'GET') {
+    \App\Cita\Infraestructura\MetricasRuta::exponer();
+    exit;
+}
+
 // 2. ENRUTADOR DE CLIENTES
 if (strpos($path, '/api/clientes') === 0) {
     header('Content-Type: application/json; charset=utf-8');
