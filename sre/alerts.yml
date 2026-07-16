@@ -1,0 +1,11 @@
+groups:
+- name: SRE_Alerts
+  rules:
+  - alert: FastBurnRateAvailability
+    expr: (1 - (sum(rate(http_requests_total{status!~"5.."}[5m])) / sum(rate(http_requests_total[5m])))) > (1 - 0.99) * 2
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "CRÍTICO: Alto Burn Rate de Disponibilidad"
+      description: "El sistema consume el Error Budget al doble de la velocidad permitida. El presupuesto colapsará si no se interviene inmediatamente."
