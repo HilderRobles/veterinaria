@@ -47,10 +47,22 @@ try {
 }
 
 // =========================================================================
-// 4. RETORNAR LAS DEPENDENCIAS COMPARTIDAS (Shared Kernel)
+// 4. INSTANCIAR MÓDULOS (INYECCIÓN DE DEPENDENCIAS - ADR-003)
 // =========================================================================
-// Retornamos un array con los servicios globales que los módulos van a necesitar.
+
+// ---> MÓDULO: GESTIÓN DE MASCOTAS (Edison) <---
+$repositorioMascota = new \App\Mascota\Infraestructura\RepositorioMascotaMySQL($pdo);
+$registrarMascotaUseCase = new \App\Mascota\Aplicacion\RegistrarMascota($repositorioMascota);
+$mascotaController = new \App\Mascota\Infraestructura\MascotaController($registrarMascotaUseCase);
+
+// =========================================================================
+// 5. RETORNAR DEPENDENCIAS Y CONTROLADORES
+// =========================================================================
+// Retornamos los servicios globales y los controladores listos para que el index.php (el enrutador) los use.
 return [
-    'database' => $pdo
-    // Si mañana agregas un Logger o un Bus de Eventos compartido, se registra aquí.
+    'database' => $pdo,
+    'controllers' => [
+        'mascota' => $mascotaController,
+        // Aquí tus compañeros irán agregando los suyos (Ej: 'cita' => $citaController)
+    ]
 ];
